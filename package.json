@@ -1,7 +1,7 @@
 {
-  "name": "api-stormtropper",
+  "name": "webs-pev",
   "version": "1.0.0",
-  "description": "API de estudos",
+  "description": "backend de aplicação web",
   "main": "./bin/www",
   "scripts": {
     "start": "node ./bin/www",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/L3onix/api-stormtropper.git"
+    "url": "git+https://github.com/L3onix/webs-pev.git"
   },
   "author": "Leonardo Facundes <leonardo.fm00@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/L3onix/api-stormtropper/issues"
+    "url": "https://github.com/L3onix/webs-pev/issues"
   },
-  "homepage": "https://github.com/L3onix/api-stormtropper#readme",
+  "homepage": "https://github.com/L3onix/webs-pev#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "config": "^1.30.0",
