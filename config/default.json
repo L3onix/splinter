@@ -4,6 +4,6 @@
         "password": "example",
         "server": "localhost",
         "port": 27017,
-        "database": "stormtropper"
+        "database": "webs-pev"
     }
 }
