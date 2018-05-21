@@ -42,6 +42,32 @@ router.post('/register', async(req, res) => {
     }
 });
 
+//rota para efetuar autenticação do usuário
+router.post('/authenticate', async(req, res) => {
+    //define variável email e password com a variáveis do corpo da requisição
+    const {email, password} = req.body;
 
+    //busca usuário com email igual ao da variável acima
+    const user = await User.findOne({email}).select('+password');
+
+    //checa se a consulta acima retornou um resultado
+    if(!user){
+        return res.status(400).send({error: 'Usuário não encontrado'});
+    }
+    //compara senha da requisição com o da busca no do banco
+    if(!await bcrypt.compare(password, user.password)){
+        return res.status(400).send({error: 'Senha inválida'});
+    }
+
+    //limpa a variável password
+    user.password = undefined;
+
+    //resposta da requisição com sucesso
+    //retorna os dados do usuário e o token de acesso
+    res.status(200).send({
+        user,
+        token: gerateToken({id: user.id})
+    });
+});
 
 module.exports = app => app.use('/auth', router);
