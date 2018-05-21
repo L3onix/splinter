@@ -3,6 +3,7 @@ const express = require('express'),
     router = express.Router(),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
+    authConfig = require('../config/auth');
 
 //função para gerar token
 function gerateToken(params = {}) {
@@ -31,7 +32,7 @@ router.post('/register', async(req, res) => {
 
         //resposta da requisição com sucesso
         //retorna os dados do usuário e o token de acesso
-        return res.status(200).send({
+        return res.send({
             user,
             token: gerateToken({id: user.id})
         });
@@ -40,3 +41,7 @@ router.post('/register', async(req, res) => {
         return res.status(400).send({error: 'Falha no cadastro'});
     }
 });
+
+
+
+module.exports = app => app.use('/auth', router);

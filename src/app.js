@@ -9,4 +9,6 @@ app.get('/', (req, res) => {
     res.status(200).send({"status": "ok"});
 });
 
+require('./controllers/authController')(app);
+
 module.exports = app;
