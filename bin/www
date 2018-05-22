@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 var app = require('../src/app');
-var server = app.listen(3000, function(){
+var server = app.listen(9000, function(){
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log('API escutando porta 3000...');
+    console.log('API escutando porta 9000...');
 });
