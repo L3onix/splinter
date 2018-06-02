@@ -17,5 +17,6 @@ app.get('/', (req, res) => {
 
 require('./controllers/authController')(app);
 require('./controllers/questionController')(app);
+require('./controllers/questionAuthController')(app);
 
 module.exports = app;

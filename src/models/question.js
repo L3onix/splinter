@@ -2,14 +2,14 @@ const mongoose = require('../database/connection');
 
 //definindo schema de question
 const QuestionSchema = new mongoose.Schema({
-    _id:{
+    codigo:{
         type: String,
         required: true,
-        unique: true,
         lowercase: true
     },
     descricao:{
-        require: true
+        type: String,
+        required: true
     },
     eixo: {
         type: String,
@@ -24,7 +24,7 @@ const QuestionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comentario'
     }],
-    createBy: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
