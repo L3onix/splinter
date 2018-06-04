@@ -11,8 +11,8 @@ router.post('/', async (req, res) => {
     //res.send({ok: true, user: req.userId});
     try{
         //console.log({body: req.});
-        console.log({eixo: req.body.eixo});
-        const question = await Question.create(req.body);
+        //console.log({eixo: req.body.eixo});
+        const question = await Question.create({...req.body, user: req.userId});
 
         res.status(200).send({question});
     }catch(err){
