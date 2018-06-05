@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     //res.status(200).send({ok: true});
     
     try{
-        const questoes = await Questao.find();
+        const questoes = await Questao.find().populate('user');
 
         return res.status(200).send({questoes});
     }catch(err){
@@ -22,13 +22,22 @@ router.get('/', async (req, res) => {
 });
 
 //rota que retorna questão específica
-router.get('/:questionID', async (req, res) => {
+router.get('/questao/:questionID', async (req, res) => {
     res.send(200).send({ok:true});
 });
 
 //rota de busca por eixo
-router.get('/:eixo', async (req, res) => {
-    res.send(200).send({ok: true});
+router.get('/eixo/:eixo', async (req, res) => {
+    //res.send(200).send({ok: true});
+    try{
+        //console.log(req.params.eixo);
+        const questoes = await Questao.find({'eixo': req.params.eixo});
+
+        return res.status(200).send({questoes});
+    }catch(err){
+        console.log(err);
+        return res.status(400).send({error: 'Erro ao carregar eixo'});
+    }
 });
 
 
