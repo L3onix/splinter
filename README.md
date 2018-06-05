@@ -20,22 +20,28 @@ API rest para aplicações voltadas para auxiliar na educação escolar
 
 + Rotas
     - (post)/auth/register          =>  cadastro
+        ```json
         {
             "name": "string",
             "email": "string",
             "password": "string"
         }
+        ```
     - (post)/auth/authenticate      =>  atenticação
+        ```json
         {
             "email": "string",
             "password": "string"
         }
+        ```
     - (get)/questao               =>  questões
 
     - (post)/questaoAuthController  => inserir novas questões
+        ```json
         {
             "codigo": "string",
             "descricao": "string",
             "eixo": "string
         }
+        ```
 
