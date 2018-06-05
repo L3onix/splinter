@@ -1,7 +1,7 @@
 const express = require('express'),
     router = express.Router(),
     authMiddleware = require('../middlewares/auth'),
-    Question = require('../models/question');
+    Question = require('../models/questao');
 
 router.use(authMiddleware);
 
@@ -20,4 +20,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = app => app.use('/questionsAuth', router);
+module.exports = app => app.use('/questaoAuth', router);
