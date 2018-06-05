@@ -5,20 +5,20 @@
 
 const express = require('express'),
     router = express.Router(),
-    Question = ('../model/question');
+    Questao = require('../models/questao');
 
 //rota para apresentar todas as questões
 router.get('/', async (req, res) => {
-    res.status(200).send({ok: true});
-    /*
+    //res.status(200).send({ok: true});
+    
     try{
-        const questions = await Question.find();
+        const questoes = await Questao.find();
 
-        return res.status(200).send({questions});
+        return res.status(200).send({questoes});
     }catch(err){
+        console.log(err);
         return res.status(400).send({error: 'Erro ao carregar questões'});
     }
-    */
 });
 
 //rota que retorna questão específica

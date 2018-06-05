@@ -2,9 +2,6 @@
 ====================
 
 API rest para aplicações voltadas para auxiliar na educação escolar
-</br>
-</br>
-</br>
 
 + Pré-requisitos
     - MongoDB server
@@ -37,7 +34,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             "password": "string"
         }
         ```
-    - (get)/questao                 =>  questões
+    - (get)/questions => questões
 
     - (post)/questaoAuthController  => inserir novas questões
         ```json

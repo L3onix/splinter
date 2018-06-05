@@ -5,7 +5,7 @@ const express = require('express'),
 
 router.use(authMiddleware);
 
-//TODO: Question.create não está funcionando
+//TODO: Deve ser feita a verificação do usuário, se ele é professor
 //rota para criar questão
 router.post('/', async (req, res) => {
     //res.send({ok: true, user: req.userId});
