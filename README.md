@@ -20,11 +20,21 @@ API rest para aplicações voltadas para auxiliar na educação escolar
 
 + Rotas
     - (post)/auth/register          =>  cadastro
+        *Aluno*
         ```json
         {
             "name": "string",
             "email": "string",
             "password": "string"
+        }
+        ```
+        *Professor*
+        ```json
+        {
+            "name": "string",
+            "email": "string",
+            "password": "string",
+            "professor": true
         }
         ```
     - (post)/auth/authenticate      =>  atenticação
@@ -44,4 +54,5 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             "eixo": "string
         }
         ```
+        
     - (get)/eixo/:eixo => busca por eixo
