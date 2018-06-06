@@ -19,7 +19,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
     - MongoExpress  =>  localhost:8081
 
 + Rotas
-    - (post)/auth/register          =>  cadastro
+    - (post)/auth/register          =>  cadastro</br>
         *Aluno*
         ```json
         {
@@ -54,5 +54,5 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             "eixo": "string
         }
         ```
-        
+        *Caso  o token utilizado não seja de um professor ele retornará a mensagem err: 'Usuário não é professor'*
     - (get)/eixo/:eixo => busca por eixo
