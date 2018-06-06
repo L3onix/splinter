@@ -51,7 +51,8 @@ API rest para aplicações voltadas para auxiliar na educação escolar
         {
             "codigo": "string",
             "descricao": "string",
-            "eixo": "string
+            "eixo": "string",
+            "alternativa": ["string", "string"]
         }
         ```
         *Caso  o token utilizado não seja de um professor ele retornará a mensagem err: 'Usuário não é professor'*

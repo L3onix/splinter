@@ -29,4 +29,9 @@ router.post('/', async (req, res) => {
     }
 });
 
+//rota para atualizar questão
+router.put('/:questaoId', async (req, res) => {
+    res.status(200).send({ok: true});
+});
+
 module.exports = app => app.use('/questaoAuth', router);

@@ -11,6 +11,9 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    alternativa:[{
+        type: String
+    }],
     eixo: {
         type: String,
         required: true,
