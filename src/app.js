@@ -12,6 +12,7 @@ app.use(function(req, res, next){
 });
 
 app.get('/', (req, res) => {
+    console.log('>>> Requisicao a porta 9000 funcionando <<<');
     res.status(200).send({"status": "ok"});
 });
 
@@ -19,4 +20,9 @@ require('./controllers/authController')(app);
 require('./controllers/questionController')(app);
 require('./controllers/questaoAuthController')(app);
 
-module.exports = app;
+var server = app.listen(9000, function(){
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log('API escutando porta 9000...');
+});

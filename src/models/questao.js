@@ -7,7 +7,7 @@ const QuestionSchema = new mongoose.Schema({
         required: true,
         lowercase: true
     },
-    descricao:{
+    enunciado:{
         type: String,
         required: true
     },

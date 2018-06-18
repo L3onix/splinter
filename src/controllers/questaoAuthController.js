@@ -57,6 +57,7 @@ router.put('/:questaoId', async (req, res) => {
     }
 });
 
+//TODO: checar se quem está deletando a questão é quem criou a questão
 //rota para deletar questão
 router.delete('/:questaoId', async (req, res) => {
     try {

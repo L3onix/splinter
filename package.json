@@ -4,8 +4,8 @@
   "description": "API Rest para aplicaçõa educacional",
   "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www",
-    "nodemon": "nodemon ./bin/www",
+    "start": "node ./src/app.js",
+    "nodemon": "nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
