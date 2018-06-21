@@ -14,7 +14,7 @@ const QuestionSchema = new mongoose.Schema({
     alternativa:[{
         type: String
     }],
-    eixo: {
+    descritor: {
         type: String,
         required: true,
         lowercase: true

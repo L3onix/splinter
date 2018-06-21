@@ -67,3 +67,10 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             "alternativa": ["string", "string"]
         }
         ```
+    - (post)/solucaoAuth/:questaoId => cria uma nova solução
+    ```json
+        {
+            "descricao": "string",
+            "alternativa": "string"
+        }
+    ```
