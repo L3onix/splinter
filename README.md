@@ -44,6 +44,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             "password": "string"
         }
         ```
+    *QUESTÕES*
     - (get)/questions => busca por todas as questões
 
     - (post)/questaoAuthController  => inserir novas questões
@@ -68,7 +69,15 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             "alternativa": ["string", "string"]
         }
         ```
+    *SOLUÇÕES*
     - (post)/solucaoAuth/:questaoId => cria uma nova solução
+    ```json
+        {
+            "descricao": "string",
+            "alternativa": "string"
+        }
+    ```
+    - (put)/solucaoAuth/:solucaoId => edita uma solução
     ```json
         {
             "descricao": "string",
