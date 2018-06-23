@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 require('./controllers/authController')(app);
 require('./controllers/questionController')(app);
 require('./controllers/questaoAuthController')(app);
+require('./controllers/solucaoController')(app);
 require('./controllers/solucaoAuthController')(app);
 
 var server = app.listen(9000, function(){

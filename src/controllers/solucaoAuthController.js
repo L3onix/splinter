@@ -50,6 +50,7 @@ router.put('/:solucaoId', async (req, res) => {
     }
 });
 
+//TODO: buscar por todas as soluções do usuário
 router.get('/', async (req, res) => {
     try{
         solucoes = await Solucao.find();
@@ -58,7 +59,7 @@ router.get('/', async (req, res) => {
     }catch(err){
         return res.status(400).send({err: 'Erro ao buscar soluções'})
     }
-})
+});
 
 //exportar rota para rota principal
 module.exports = app => app.use('/solucaoAuth', router);

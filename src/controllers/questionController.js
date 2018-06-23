@@ -23,7 +23,18 @@ router.get('/', async (req, res) => {
 
 //rota que retorna questão específica
 router.get('/questao/:questionID', async (req, res) => {
-    res.send(200).send({ok:true});
+    //res.send(200).send({ok:true});
+    try{
+        const questao = await Questao.findById(req.params.questionID).populate('solucoes');
+        if(questao != null){
+            res.status(200).send({questao});
+        }else{
+            return res.status(400).send({err: 'Questão não existe'});
+        }
+    }catch(err){
+        console.log(err);
+        return res.status(400).send({err: 'Erro ao carregar questão '+req.params.questionID});
+    }
 });
 
 //rota de busca por eixo

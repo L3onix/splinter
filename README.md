@@ -56,7 +56,8 @@ API rest para aplicações voltadas para auxiliar na educação escolar
         }
         ```
         *Caso  o token utilizado não seja de um professor ele retornará a mensagem err: 'Usuário não é professor'*
-    - (get)/eixo/:eixo => busca por eixo
+    - (get)/descritor/:descritor => busca por descritor
+    - (get)/question/questao/:questaoID => bucar por questão
     - (delete)/questaoAuth/:questaoId => deleta questão
     - (put)/questaoAuth/:questaoId => atualiza questão
         ```json
