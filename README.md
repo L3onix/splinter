@@ -70,6 +70,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
         }
         ```
     *SOLUÇÕES*
+    - (get)/solucao/:solucaoId => busca uma solução gerando visualização
     - (post)/solucaoAuth/:questaoId => cria uma nova solução
     ```json
         {
@@ -84,3 +85,4 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             "alternativa": "string"
         }
     ```
+    - (delete)/solucaoAuth/:solucaoId => deleta solução

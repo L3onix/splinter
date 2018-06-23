@@ -57,7 +57,22 @@ router.get('/', async (req, res) => {
 
         return res.status(200).send({solucoes});
     }catch(err){
-        return res.status(400).send({err: 'Erro ao buscar soluções'})
+        return res.status(400).send({err: 'Erro ao buscar soluções'});
+    }
+});
+
+router.delete('/:solucaoId', async (req, res) => {
+    try{
+        const solucao = await Solucao.findById(req.params.solucaoId);
+        if(solucao.createBy == req.userId){
+            await Solucao.findByIdAndRemove(req.params.solucaoId);
+            res.status(200).send({delete: true});
+        }else{
+            res.status(400).send({err: 'Usuário não é dono da solução'});
+        }
+    }catch(err){
+        console.log(err);
+        return res.status(400).send({err: 'Erro ao deletar solução'});
     }
 });
 
