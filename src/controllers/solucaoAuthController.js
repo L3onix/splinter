@@ -76,5 +76,21 @@ router.delete('/:solucaoId', async (req, res) => {
     }
 });
 
+
+//rota para like
+router.put('/like/:solucaoId', async (req, res) => {
+    try{
+        var solucao = Solucao.findById(req.params.solucaoId);
+        solucao.avaliacoes ++;
+    }catch(err){
+
+    }
+});
+
+//rota para dislike
+router.put('/dislike', async (req, res) => {
+
+});
+
 //exportar rota para rota principal
 module.exports = app => app.use('/solucaoAuth', router);
