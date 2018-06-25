@@ -23,10 +23,10 @@ const SolucaoSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    avalicoes:{
-        type: Number,
-        default: 0
-    }
+    avalicoes:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Avaliacao'
+    }]
 });
 
 //definindo que 'Solucao' segue o model 'SolucaoSchema'

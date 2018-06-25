@@ -3,7 +3,8 @@ const express = require('express'),
     authMiddleware = require('../middlewares/auth'),
     Solucao = require('../models/solucao'),
     Usuario = require('../models/user'),
-    Questao = require('../models/questao');
+    Questao = require('../models/questao'),
+    Avaliacao = require('../models/avaliacao');
 
 router.use(authMiddleware);
 
@@ -61,6 +62,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+//rota para deletar solução
 router.delete('/:solucaoId', async (req, res) => {
     try{
         const solucao = await Solucao.findById(req.params.solucaoId);
@@ -73,6 +75,27 @@ router.delete('/:solucaoId', async (req, res) => {
     }catch(err){
         console.log(err);
         return res.status(400).send({err: 'Erro ao deletar solução'});
+    }
+});
+
+//rota para avaliação LIKE || DISLIKE
+router.post('/avaliacao/:solucaoId', async (req, res) => {
+    try{
+        var solucao = await Solucao.findById(req.params.solucaoId);
+        if(solucao != null){
+            //criando avaliação no banco de dados
+            const avaliacao = await Avaliacao.create({...req.body, createBy:req.userId});
+            //atualizando solução adicionando o ID da avaliação
+            solucao = await Solucao.update({_id: req.params.solucaoId}, {$push: {avaliacoes: avaliacao.id}}, {new: true});
+
+            //retornando resultado da requisição
+            res.status(200).send(solucao);
+        }else{
+            res.status(400).send({err: 'Id de solução não existe'});
+        }
+    }catch(err){
+        console.log(err);
+        return res.status(400).send({err: 'Erro ao avaliar solução'});
     }
 });
 
