@@ -38,14 +38,7 @@ router.put('/:questaoId', async (req, res) => {
         const user = await Usuario.findById(userId);
         //checando se é professor
         if (user.professor === true) {
-
-            const { codigo, descricao, eixo, alternativa } = req.body;
-            const questao = await Question.findByIdAndUpdate(req.params.questaoId, {
-                codigo,
-                descricao,
-                eixo,
-                alternativa
-            }, { new: true });
+            const questao = await Question.findByIdAndUpdate(req.params.questaoId,req.body, { new: true });
 
             return res.status(200).send({ questao });
         } else {
