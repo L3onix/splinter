@@ -23,7 +23,7 @@ const SolucaoSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    avalicoes:[{
+    avaliacoes:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Avaliacao'
     }]
