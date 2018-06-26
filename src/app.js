@@ -21,6 +21,7 @@ require('./controllers/questionController')(app);
 require('./controllers/questaoAuthController')(app);
 require('./controllers/solucaoController')(app);
 require('./controllers/solucaoAuthController')(app);
+require('./controllers/comentarioAuthController')(app);
 
 var server = app.listen(9000, function(){
     var host = server.address().address;
