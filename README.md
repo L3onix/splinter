@@ -52,7 +52,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
         {
             "codigo": "string",
             "descricao": "string",
-            "eixo": "string",
+            "descritor": "string",
             "alternativa": ["string", "string"]
         }
         ```
@@ -65,7 +65,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
         {
             "codigo": "string",
             "descricao": "string",
-            "eixo": "string",
+            "descritor": "string",
             "alternativa": ["string", "string"]
         }
         ```
@@ -86,3 +86,25 @@ API rest para aplicações voltadas para auxiliar na educação escolar
         }
     ```
     - (delete)/solucaoAuth/:solucaoId => deleta solução
+    *AVALIAÇÃO*
+    - (post)/solucaoAuth/avaliacao/:solucaoId
+    ```json
+        {
+            "like": true
+        }
+    ```
+    Carrega TRUE para like, e FALSE para dislike
+
+    *COMENTÁRIO*
+    - (post)/comentarioAuth/:questaoId
+    ```json
+        {
+            "descricao": "string"
+        }
+    ```
+    - (put)/comentarioAuth/:comentarioId
+    ```json
+        {
+            "descricao": "string"
+        }
+    ```
