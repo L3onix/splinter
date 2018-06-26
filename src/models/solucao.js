@@ -24,8 +24,8 @@ const SolucaoSchema = new mongoose.Schema({
         default: 0
     },
     avalicoes:[{
-        type: Number,
-        default: 0
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Avaliacao'
     }]
 });
 

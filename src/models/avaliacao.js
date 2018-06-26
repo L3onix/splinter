@@ -2,11 +2,8 @@ const mongoose = require('../database/connection');
 
 //definindo schema de avaliacao
 const AvaliacaoSchema = new mongoose.Schema({
-    nota: {
-        type: Number,
-        min: 1,
-        max: 5,
-        required: true
+    like: {
+        type: Boolean
     },
     createBy: {
         type: mongoose.Schema.Types.ObjectId,
