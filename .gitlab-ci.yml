@@ -1,0 +1,3 @@
+job:
+ script:
+ - if [ $CI_BUILD_REF_NAME = "master" ]; then (cd /etc/gitlab-runner/workspace/nodejs.webs-pev/ && cap homologacao deploy) fi   
