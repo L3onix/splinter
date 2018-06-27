@@ -21,5 +21,6 @@ API rest para aplicações voltadas para auxiliar na educação escolar
 
 + Rotas
     <h2>Teste</h2>
-    - (get)/<br/>
+    - (get)/
+    <br/>
     *Deve retornar um JSON {status: "ok"}*
