@@ -4,6 +4,7 @@ const express = require('express'),
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
 //corrigindo problema de cross origin
 app.use(function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
@@ -11,19 +12,17 @@ app.use(function(req, res, next){
     next();
 });
 
+//teste de API
 app.get('/', (req, res) => {
     console.log('>>> Requisicao a porta 9000 funcionando <<<');
-    res.status(200).send({"status": "ok"});
+    res.status(200).send({status: "ok"});
 });
 
-require('./controllers/authController')(app);
-require('./controllers/questionController')(app);
-require('./controllers/questaoAuthController')(app);
-require('./controllers/solucaoController')(app);
-require('./controllers/solucaoAuthController')(app);
-require('./controllers/comentarioController')(app);
-require('./controllers/comentarioAuthController')(app);
 
+//import de controllers
+require('./controllers/authController')(app);
+
+//inicialização do servidor na porta 9000
 var server = app.listen(9000, function(){
     var host = server.address().address;
     var port = server.address().port;
