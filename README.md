@@ -24,3 +24,5 @@ API rest para aplicações voltadas para auxiliar na educação escolar
     - (get)/
     <br/>
     *Deve retornar um JSON {status: "ok"}*
+
+    
