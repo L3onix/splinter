@@ -14,12 +14,12 @@ API rest para aplicações voltadas para auxiliar na educação escolar
         # docker run -d -p 27017:27017 --name prime-mongodb --restart always mongo
         ```
         Você também pode instalar o MongoDB Compass, que pode auxiliar no controle do banco de dados com uma interface gráfica.
-        
+
 + Docker Compose
     - MongoDB       =>  localhost:27017
     - MongoExpress  =>  localhost:8081
 
 + Rotas
     <h2>Teste</h2>
-    - (get)/
+    - (get)/ </br>
     *Deve retornar um JSON {status: "ok"}*
