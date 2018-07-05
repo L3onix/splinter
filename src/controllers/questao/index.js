@@ -5,7 +5,9 @@ const express = require('express'),
 //rota para apresentar todas as Questao
 router.get('/', async(req, res) => {
     try{
+        const questao = await Questao.find();
 
+        return res.status(200).send(questao);
     }catch(err){
         console.log(err);
         res.status(400).send({err: "Erro ao carregar questões"});
