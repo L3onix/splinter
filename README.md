@@ -24,3 +24,22 @@ API rest para aplicações voltadas para auxiliar na educação escolar
     - (get)/
     <br/>
     *Deve retornar um JSON {status: "ok"}*
+    <h2>User</h2>
+    <h2>Questao</h2>
+    - (post)questaoAuth/
+    ```json
+        {
+            codigo: 'string',
+            enunciado: 'string',
+            alternativas: ['string'],
+            descritor: 'string',
+            solucoes: [objectId],
+            comentarios: [objectId]
+        }
+    ```
+    <br/>*Deve retornar um JSON {status: "Sucesso ao criar questão"}*
+    - (put)questaoAuth/questaoId
+    - (delete)questaoAuth/questaoId
+    - (get)questao/
+    - (get)questao/questaoId
+    - (get)questao/descritor/descritorId

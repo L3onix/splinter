@@ -40,6 +40,23 @@ router.put('/:questaoId', async(req, res) => {
     }
 });
 
+//rota para deletar Questao
+router.delete('/:questaoId', async(req, res) => {
+    try{
+        //checando se o usuário é professor
+        if(await checarProfessor(req.userId)){
+            //deletando Questao
+            await Questao.findByIdAndRemove(req.params.questaoId);
+            res.status(200).send({status: 'Sucesso ao deletar questão'});
+        }else{
+            res.status(400).send({status: 'Usuário não é professor'});
+        }
+    }catch(err){
+        console.log(err);
+        res.status(400).send({status: 'Erro ao deletar questão'});
+    }
+});
+
 async function checarProfessor(userId){
     const user = await Usuario.findById(userId);
     if(user.professor == true){

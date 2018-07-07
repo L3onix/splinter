@@ -10,22 +10,22 @@ router.get('/', async(req, res) => {
         return res.status(200).send(questao);
     }catch(err){
         console.log(err);
-        res.status(400).send({err: "Erro ao carregar questões"});
+        res.status(400).send({status: "Erro ao carregar questões"});
     }
 });
 
 //rota para apresentar uma Questao por ID
 router.get('/:questaoId', async(req, res) => {
     try{
-        const questao = await Questao.findOne(req.params.questaoId);
+        const questao = await Questao.findById (req.params.questaoId);
         if(questao != null){
             res.status(200).send({questao});
         }else{
-            res.status(400).send({err: "Questão não existe"});
+            res.status(400).send({status: "Questão não existe"});
         }
     }catch(err){
         console.log(err);
-        res.status(400).send({err: "Erro ao carregar questão"});
+        res.status(400).send({status: "Erro ao carregar questão"});
     }
 });
 
@@ -37,7 +37,7 @@ router.get('/descritor/:descritor', async(req, res) => {
         return res.status(200).send(questao);
     }catch(err){
         console.log(err);
-        res.status(400).send({err: "Erro ao buscar por descritor"});
+        res.status(400).send({status: "Erro ao buscar por descritor"});
     }
 });
 
