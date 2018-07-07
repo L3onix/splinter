@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
 //import de controllers
 require('./controllers/authController')(app);
 require('./controllers/questao')(app);
+require('./controllers/questao/auth')(app);
 
 //inicialização do servidor na porta 9000
 var server = app.listen(9000, function(){
