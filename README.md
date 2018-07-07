@@ -26,7 +26,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
     *Deve retornar um JSON {status: "ok"}*
     <h2>User</h2>
     <h2>Questao</h2>
-    - (post)questaoAuth/
+    - (post)questaoAuth/<br/>
     ```json
         {
             codigo: 'string',
