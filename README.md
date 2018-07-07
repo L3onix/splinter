@@ -26,7 +26,7 @@ API rest para aplicações voltadas para auxiliar na educação escolar
     *Deve retornar um JSON {status: "ok"}*
     <h2>User</h2>
     <h2>Questao</h2>
-    - (post)questaoAuth/<br/>
+    - (post)questaoAuth/
     ```json
         {
             codigo: 'string',
@@ -37,9 +37,28 @@ API rest para aplicações voltadas para auxiliar na educação escolar
             comentarios: [objectId]
         }
     ```
-    <br/>*Deve retornar um JSON {status: "Sucesso ao criar questão"}*
+    *Deve retornar um JSON {status: "Sucesso ao criar questão"}*
     - (put)questaoAuth/questaoId
+    ```json
+        {
+            codigo: 'string',
+            enunciado: 'string',
+            alternativas: ['string'],
+            descritor: 'string',
+            solucoes: [objectId],
+            comentarios: [objectId]
+        }
+    ```
+    *Deve retornar um JSON {status: "Sucesso ao editar questão"}*
     - (delete)questaoAuth/questaoId
+    <br/>
+    *Deve retornar um JSON {status: "Sucesso ao deletar questão"}*
     - (get)questao/
+    <br/>
+    *Deve retornar um JSON [ObjectQuestao]*
     - (get)questao/questaoId
+    <br/>
+    *Deve retornar um JSON ObjectQuestao*
     - (get)questao/descritor/descritorId
+    <br/>
+    *Deve retornar um JSON [ObjectQuestao]*
