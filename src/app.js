@@ -14,7 +14,7 @@ app.use(function(req, res, next){
 
 //teste de API
 app.get('/', (req, res) => {
-    console.log('>>> Requisicao a porta 9000 funcionando <<<');
+    console.log('>>> Requisição a porta 9000 funcionando <<<');
     res.status(200).send({status: "ok"});
 });
 
@@ -23,6 +23,8 @@ app.get('/', (req, res) => {
 require('./controllers/authController')(app);
 require('./controllers/questao')(app);
 require('./controllers/questao/auth')(app);
+require('./controllers/comentario')(app);
+require('./controllers/comentario/auth')(app);
 
 //inicialização do servidor na porta 9000
 var server = app.listen(9000, function(){

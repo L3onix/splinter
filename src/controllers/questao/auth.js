@@ -57,6 +57,7 @@ router.delete('/:questaoId', async(req, res) => {
     }
 });
 
+//função que verifica se a userId é um professor
 async function checarProfessor(userId){
     const user = await Usuario.findById(userId);
     if(user.professor == true){
@@ -66,4 +67,5 @@ async function checarProfessor(userId){
     }
 }
 
+//exports
 module.exports = app => app.use('/questaoAuth', router);
