@@ -25,6 +25,8 @@ require('./controllers/questao')(app);
 require('./controllers/questao/auth')(app);
 require('./controllers/comentario')(app);
 require('./controllers/comentario/auth')(app);
+require('./controllers/solucao')(app);
+require('./controllers/solucao/auth')(app);
 
 //inicialização do servidor na porta 9000
 var server = app.listen(9000, function(){
