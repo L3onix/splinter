@@ -3,14 +3,15 @@ const mongoose = require('../database/connection');
 //definindo schema de avaliacao
 const AvaliacaoSchema = new mongoose.Schema({
     like: {
-        type: Boolean
+        type: Boolean,
+        required: true
     },
-    createBy: {
+    criadoPor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    createAt: {
+    criadoEm: {
         type: Date,
         default: Date.now
     }
