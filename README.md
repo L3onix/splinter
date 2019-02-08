@@ -1,7 +1,6 @@
-# webs-pev
-====================
+# ATENA
 
-API rest para aplicações voltadas para auxiliar na educação escolar
+API REST do projeto Escola Ninja
 
 + Pré-requisitos
     - MongoDB server
