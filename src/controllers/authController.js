@@ -28,7 +28,7 @@ router.post('/register', async(req, res) => {
         const user = await User.create(req.body);
 
         //limpa a campo password do usuário
-        user.senha = undefined;
+        user.password = undefined;
 
         //resposta da requisição com sucesso
         //retorna os dados do usuário e o token de acesso
@@ -36,9 +36,9 @@ router.post('/register', async(req, res) => {
             user,
             token: gerateToken({id: user.id})
         });
-    }catch(err){    //tratamento de erro da tentativa
+    }catch(error){    //tratamento de erro da tentativa
         //resposta da requisão com falha
-        console.log(err);
+        console.log(error);
         return res.status(400).send({error: 'Falha no cadastro'});
     }
 });
@@ -46,22 +46,22 @@ router.post('/register', async(req, res) => {
 //rota para efetuar autenticação do usuário
 router.post('/authenticate', async(req, res) => {
     //define variável email e password com a variáveis do corpo da requisição
-    const {email, senha} = req.body;
+    const {email, password} = req.body;
 
     //busca usuário com email igual ao da variável acima
-    const user = await User.findOne({email}).select('+senha');
+    const user = await User.findOne({email}).select('+password');
 
     //checa se a consulta acima retornou um resultado
     if(!user){
         return res.status(400).send({error: 'Usuário não encontrado'});
     }
     //compara senha da requisição com o da busca no do banco
-    if(!await bcrypt.compare(senha, user.senha)){
+    if(!await bcrypt.compare(password, user.password)){
         return res.status(400).send({error: 'Senha inválida'});
     }
 
     //limpa a variável password
-    user.senha = undefined;
+    user.password = undefined;
 
     //resposta da requisição com sucesso
     //retorna os dados do usuário e o token de acesso

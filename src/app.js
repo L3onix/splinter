@@ -21,13 +21,13 @@ app.get('/', (req, res) => {
 
 //import de controllers
 require('./controllers/authController')(app);
-require('./controllers/questao')(app);
-require('./controllers/questao/auth')(app);
-require('./controllers/comentario')(app);
-require('./controllers/comentario/auth')(app);
-require('./controllers/solucao')(app);
-require('./controllers/solucao/auth')(app);
-require('./controllers/avaliacao/auth')(app);
+require('./controllers/question')(app);
+require('./controllers/question/auth')(app);
+require('./controllers/comment')(app);
+require('./controllers/comment/auth')(app);
+require('./controllers/solution')(app);
+require('./controllers/solution/auth')(app);
+require('./controllers/evaluation/auth')(app);
 
 //inicialização do servidor na porta 9000
 var server = app.listen(9000, function(){
