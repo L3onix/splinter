@@ -1,22 +1,18 @@
 const mongoose = require('../database/connection');
 
 //definindo schema de avaliacao
-const AvaliacaoSchema = new mongoose.Schema({
+const EvaluationSchema = new mongoose.Schema({
     like: {
         type: Boolean,
         required: true
     },
-    criadoPor: {
+    createBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    },
-    criadoEm: {
-        type: Date,
-        default: Date.now
     }
 });
 
-const Avaliacao = mongoose.model('Avaliacao', AvaliacaoSchema);
+const Evaluation = mongoose.model('Evaluation', EvaluationSchema);
 
-module.exports = Avaliacao;
+module.exports = Evaluation;

@@ -1,43 +1,47 @@
 const mongoose = require('../database/connection');
 
 //definindo schema de questao
-const QuestaoSchema = new mongoose.Schema({
-    codigo:{
+const QuestionSchema = new mongoose.Schema({
+    font:{
         type: String,
-        required: true,
+        required: false,
         lowercase: true
     },
-    enunciado:{
+    statemant:{
         type: String
     },
-    alternativas:[{
+    alternatives:[{
         type: String
     }],
-    descritor:{
+    matter:{
         type: String,
         lowercase: true
     },
-    solucoes:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Solucao'
+    tags:[{
+        type: String,
+        lowercase: true
     }],
-    comentarios:[{
+    solutions:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comentario'
+        ref: 'Solution'
     }],
-    criador:{
+    comments:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
+    createBy:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    data:{
+    createAt:{
         type: Date,
         default: Date.now
     }
 });
 
 //criando objeto de banco de dados que segue o modelo QuestaoSchema
-const Questao = mongoose.model('Questao', QuestaoSchema);
+const Question = mongoose.model('Question', QuestionSchema);
 
 //exportando objeto Questao
-module.exports = Questao;
+module.exports = Question;

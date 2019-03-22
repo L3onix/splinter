@@ -3,7 +3,7 @@ const mongoose = require('../database/connection'),
 
 //definindo schema de user
 const UserSchema = new mongoose.Schema({
-    nome:{
+    name:{
         type: String,
         required: true
     },
@@ -13,16 +13,16 @@ const UserSchema = new mongoose.Schema({
         required: true,
         lowercase: true
     },
-    senha: {
+    password: {
         type: String,
         required: true,
         select: false
     },
-    professor: {
-        type: Boolean,
-        default: false
+    flag: {
+        type: String,
+        default: "student"
     },
-    criadoEm: {
+    createAt: {
         type: Date,
         default: Date.now
     }
@@ -30,8 +30,8 @@ const UserSchema = new mongoose.Schema({
 
 //gerando hash criptográfica de senha do usuário
 UserSchema.pre('save', async function(next){
-    const hash = await bcryptjs.hash(this.senha, 10);
-    this.senha = hash;
+    const hash = await bcryptjs.hash(this.password, 10);
+    this.password = hash;
 
     next();
 });

@@ -1,22 +1,22 @@
 const mongoose = require('../database/connection');
 
 //definindo schema de Comentario
-const ComentarioSchema = new mongoose.Schema({
-    descricao:{
+const CommentSchema = new mongoose.Schema({
+    text:{
         type: String,
         required: true
     },
-    criadoPor:{
+    createBy:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    criadoEm:{
+    createAt:{
         type: Date,
         default: Date.now
     }
 });
 
-const Comentario = mongoose.model('Comentario', ComentarioSchema);
+const Comment = mongoose.model('Comment', CommentSchema);
 
-module.exports = Comentario;
+module.exports = Comment;

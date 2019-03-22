@@ -1,35 +1,30 @@
 const mongoose = require('../database/connection');
 
 //definindo schema de solucao
-const SolucaoSchema = new mongoose.Schema({
-    descricao:{
-        type: String,
-        required: true
+const SolutionSchema = new mongoose.Schema({
+    text:{
+        type: String
     },
-    alternativa:{
-        type: String,
-        required: true
-    },
-    criadoPor: {
+    createBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    criadoEm: {
+    createAt: {
         type: Date,
         default: Date.now
     },
-    visualizacoes: {
+    visualization: {
         type: Number,
         default: 0
     },
-    avaliacoes:[{
+    evaluations:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Avaliacao'
+        ref: 'Evaluation'
     }]
 });
 
 //definindo que 'Solucao' segue o model 'SolucaoSchema'
-const Solucao = mongoose.model('Solucao', SolucaoSchema);
+const Solution = mongoose.model('Solution', SolutionSchema);
 
-module.exports = Solucao;
+module.exports = Solution;
