@@ -30,9 +30,9 @@ require('./controllers/solution/auth')(app);
 require('./controllers/evaluation/auth')(app);
 
 //inicialização do servidor na porta 9000
-var server = app.listen(9000, function(){
+var server = app.listen(process.env.PORT || 9000, function(){
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log('API escutando porta 9000...');
+    console.log('API escutando porta '+port);
 });
