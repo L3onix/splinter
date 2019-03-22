@@ -5,7 +5,7 @@ const express = require('express'),
 //rota para buscar todos os comentários
 router.get('/', async(req, res) => {
     try{
-        const comments = await Comments.find();
+        const comments = await Comment.find();
         res.status(200).send(comments);
     }catch(error){
         console.log(error);

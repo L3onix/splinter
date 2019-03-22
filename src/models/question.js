@@ -7,7 +7,7 @@ const QuestionSchema = new mongoose.Schema({
         required: false,
         lowercase: true
     },
-    statemant:{
+    statement:{
         type: String
     },
     alternatives:[{

@@ -1,7 +1,7 @@
 # ATENA
-
 API REST do projeto Escola Ninja
 
+## Rodando API localmente
 + Pré-requisitos
     - MongoDB server
         Para verificar se você já tem um servidor mongo rodando no docker utilize o comando abaixo, ele irá apresentar as informações sobre as imagens de docker que estão rodando.
@@ -14,50 +14,137 @@ API REST do projeto Escola Ninja
         ```
         Você também pode instalar o MongoDB Compass, que pode auxiliar no controle do banco de dados com uma interface gráfica.
 
-+ Docker Compose
-    - MongoDB       =>  localhost:27017
-    - MongoExpress  =>  localhost:8081
+## Rotas
 
-+ Rotas
-    <h2>Teste</h2>
-    - (get)/
-    <br/>
-    *Deve retornar um JSON {status: "ok"}*
-    <h2>User</h2>
-    <h2>Questao</h2>
-    - (post)questaoAuth/
++ **(GET) URL/**
+    > Rota padrão, funciona apenas como uma rota de teste para verificar se a API está funcionando.
+    - Entrada
     ```json
-        {
-            codigo: 'string',
-            enunciado: 'string',
-            alternativas: ['string'],
-            descritor: 'string',
-            solucoes: [objectId],
-            comentarios: [objectId]
-        }
+    {}
     ```
-    *Deve retornar um JSON {status: "Sucesso ao criar questão"}*
-    - (put)questaoAuth/questaoId
+    - Saída
     ```json
-        {
-            codigo: 'string',
-            enunciado: 'string',
-            alternativas: ['string'],
-            descritor: 'string',
-            solucoes: [objectId],
-            comentarios: [objectId]
-        }
+    {
+        "status": "ok"
+    }
     ```
-    *Deve retornar um JSON {status: "Sucesso ao editar questão"}*
-    - (delete)questaoAuth/questaoId
-    <br/>
-    *Deve retornar um JSON {status: "Sucesso ao deletar questão"}*
-    - (get)questao/
-    <br/>
-    *Deve retornar um JSON [ObjectQuestao]*
-    - (get)questao/questaoId
-    <br/>
-    *Deve retornar um JSON ObjectQuestao*
-    - (get)questao/descritor/descritorId
-    <br/>
-    *Deve retornar um JSON [ObjectQuestao]*
+
+    ### **User**
+    + **(POST) URL/auth/register**
+        > Rota para cadastrar um novo usuário ao sistema.
+        - Entrada
+        ```json
+        {
+            "name": "Juninho K Mix",
+            "email": "juninho@teste.com",
+            "password": "*******",
+            "flag": "student"
+        }
+        ```
+        - Saída
+        ```json
+        {
+            "user": {
+                "flag": "student",
+                "_id": "5c952fda718b2a00049ddb09",
+                "name": "Juninho K Mix",
+                "email": "juninho@teste.com",
+                "createAt": "2019-03-22T18:56:26.933Z",
+                "__v": 0
+            },
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOTUyZmRhNzE4YjJhMDAwNDlkZGIwOSIsImlhdCI6MTU1MzI4MDk4NywiZXhwIjoxNTUzMzY3Mzg3fQ.DvycNODB0I-IWNpz6JJ5LvEYiRCdc_dt7tTNwq2mX1Q"
+        }
+        ```
+
+    + **(POST) URL/auth/authenticate**
+        > Rota para autenticar usuário.
+        - Entrada
+        ```json
+        {
+            "email": "juninho@teste.com",
+            "password": "*******"
+        }
+        ```
+        - Saída
+        ```json
+        {
+            "user": {
+                "flag": "student",
+                "_id": "5c952fda718b2a00049ddb09",
+                "name": "Juninho K Mix",
+                "email": "juninho@teste.com",
+                "createAt": "2019-03-22T18:56:26.933Z",
+                "__v": 0
+            },
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOTUyZmRhNzE4YjJhMDAwNDlkZGIwOSIsImlhdCI6MTU1MzI4MTc2OCwiZXhwIjoxNTUzMzY4MTY4fQ.xaKsqrhX7pJKsER-eTmQwzxIxRXWbLR8wno_mjMW2zs"
+        }
+        ```
+    
+    ### **Comment**
+    + **(GET) URL/comment**
+        > Rota destinada apenas para teste com os *comments* da API.
+        - Entrada
+        ```json
+        {}
+        ```
+        - Saída
+        ```json
+        {
+
+        }
+        ```
+    
+    + **(POST) URL/commentAuth/questionId**
+        > Rota destinada pra criar um *comment* referente a uma *question* utilizando o "*questionId*" presente na URL.
+        - Entrada
+        ```json
+        {
+            "text": "Solução muito simples e intuitiva"
+        }
+        ```
+        - Saída
+        ```json
+        {
+
+        }
+        ```
+    
+    ### **Question**
+    + **(GET) URL/question/**
+        > Rota destina apenas para teste com as *question* da API
+        - Entrada
+        ```json
+        {}
+        ```
+        - Saída
+        ```json
+        [
+            {
+                "tags": [
+                    "estudo",
+                    "aprendizado"
+                ],
+                "solutions": [],
+                "comments": [],
+                "_id": "5c953b8d718b2a00049ddb0b",
+                "font": "teste - 2019",
+                "statement": "Qual o método de estudo que você utiliza para conseguir maior eficiência de aprendizado?",
+                "matter": "desenvolvimento pessoal",
+                "createBy": "5c953b7a718b2a00049ddb0a",
+                "createAt": "2019-03-22T19:46:21.207Z",
+                "__v": 0
+            }
+        ]
+        ```
+    
+    + **(POST) URL/questionAuth**
+        > Rota para criar uma *question*, por definição somente usuários com a flag "*teacher*" estão permitidos a fazer esta operação.
+        - Entrada
+        ```json
+        {
+            "font": "TESTE - 2019",
+            "statement": "Qual o método de estudo que você utiliza para conseguir maior eficiência de aprendizado?",
+            "matter": "desenvolvimento pessoal",
+            "tags": ["estudo", "aprendizado"]
+        }
+        ```
