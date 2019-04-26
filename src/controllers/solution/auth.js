@@ -6,21 +6,38 @@ const express = require('express'),
 
 router.use(authMiddleware);
 
+//TODO: buscar por todas as soluções do usuário
+/*
+router.get('/', async (req, res) => {
+    try {
+        solucoes = await Solucao.find();
+
+        return res.status(200).send({ solucoes });
+    } catch (err) {
+        return res.status(400).send({ err: 'Erro ao buscar soluções' });
+    }
+});
+*/
+
 //create Solution
 router.post('/:questionId', async (req, res) => {
-    try {
-        //buscando usuário
-        const question = await Question.findById(req.params.questionId);
-        //criando nova solução
-        const solution = await Solution.create({ ...req.body, createBy: req.userId });
-        //atualiza a questão com o id da solução
-        await Question.update({ _id: req.params.questionId }, { $push: { solutions: solution.id } });
-        //console.log(solucao.id);
+    if(checkQuestionExists(req.params.questionId)){
+        try {
+            //buscando usuário
+            const question = await Question.findById(req.params.questionId);
+            //criando nova solução
+            const solution = await Solution.create({ ...req.body, createBy: req.userId });
+            //atualiza a questão com o id da solução
+            await Question.update({ _id: req.params.questionId }, { $push: { solutions: solution.id } });
+            //console.log(solucao.id);
 
-        return res.status(200).send({ create: true });
-    } catch (error) {
-        console.log(error);
-        return res.status(400).send({ error: 'Erro ao criar nova solução' });
+            return res.status(200).send({ create: true });
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({ error: 'Erro ao criar nova solução' });
+        }
+    }else{
+        return res.status(400).send({error: 'ID de Question não existe'});
     }
 });
 
@@ -48,19 +65,6 @@ router.put('/:solutionId', async (req, res) => {
     }
 });
 
-//TODO: buscar por todas as soluções do usuário
-/*
-router.get('/', async (req, res) => {
-    try {
-        solucoes = await Solucao.find();
-
-        return res.status(200).send({ solucoes });
-    } catch (err) {
-        return res.status(400).send({ err: 'Erro ao buscar soluções' });
-    }
-});
-*/
-
 //rota para deletar solução
 router.delete('/:solutionId', async (req, res) => {
     try {
@@ -76,6 +80,16 @@ router.delete('/:solutionId', async (req, res) => {
         return res.status(400).send({ error: 'Erro ao deletar solução' });
     }
 });
+
+//função que checa se questão existe
+async function checkQuestionExists(questionId){
+    try{
+        const question = Question.findById(questionId);
+        return true
+    }catch(error){
+        return false
+    }
+}
 
 //exportar rota para rota principal
 module.exports = app => app.use('/solutionAuth', router);

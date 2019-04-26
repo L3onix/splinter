@@ -23,17 +23,16 @@ router.post('/', async (req, res) => {
     }
 });
 
-// TODO: checar se quem está editando é o dono
 //rota para editar Questao
 router.put('/:questionId', async(req, res) => {
     try{
         //checando se o usuário é professor
-        if(await checkFlag(req.userId)){
+        if(await checkCreator(req.userId, req.params.questionId)){
             //editando Questao
             await Question.findByIdAndUpdate(req.params.questionId, req.body);
             res.status(200).send({status: 'Sucesso ao editar questão'});
         }else{
-            res.status(400).send({error: 'Usuário não é professor'});
+            res.status(400).send({error: 'Usuário não controla esta questão'});
         }
     }catch(error){
         console.log(error);
@@ -45,7 +44,7 @@ router.put('/:questionId', async(req, res) => {
 router.delete('/:questionId', async(req, res) => {
     try{
         //checando se o usuário é professor
-        if(await checkFlag(req.userId)){
+        if(await checkCreator(req.userId, req.params.questionId)){
             //deletando Questao
             await Question.findByIdAndRemove(req.params.questionId);
             res.status(200).send({status: 'Sucesso ao deletar questão'});
@@ -65,6 +64,16 @@ async function checkFlag(userId){
         return true;
     }else{
         return false;
+    }
+}
+
+//função que verifica se o userId da requisição é o mesmo do createBy da Question
+async function checkCreator(userId, questionId){
+    const question = await Question.findById(questionId);
+    if(question.createBy == userId){
+        return true
+    }else{
+        return false
     }
 }
 

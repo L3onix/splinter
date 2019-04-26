@@ -8,7 +8,8 @@ const QuestionSchema = new mongoose.Schema({
         lowercase: true
     },
     statement:{
-        type: String
+        type: String,
+        required: false
     },
     image:{
         type: String,
