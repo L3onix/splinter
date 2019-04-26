@@ -10,6 +10,10 @@ const QuestionSchema = new mongoose.Schema({
     statement:{
         type: String
     },
+    image:{
+        type: String,
+        required: false
+    },
     alternatives:[{
         type: String
     }],

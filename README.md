@@ -138,13 +138,14 @@ API Rest para aplicativo educacional. Desenvolvida durante o projeto de pesquisa
         ```
     
     + **(POST) URL/questionAuth**
-        > Rota para criar uma *question*, por definição somente usuários com a flag "*teacher*" estão permitidos a fazer esta operação.
+        > Rota para criar uma *Question*, por definição somente usuários com a flag "*teacher*" estão permitidos a fazer esta operação.
         - Entrada
-        ```json
-        {
-            "font": "TESTE - 2019",
-            "statement": "Qual o método de estudo que você utiliza para conseguir maior eficiência de aprendizado?",
-            "matter": "desenvolvimento pessoal",
-            "tags": ["estudo", "aprendizado"]
-        }
-        ```
+            ```json
+            {
+                "font": "TESTE - 2019",
+                "statement": "Qual o método de estudo que você utiliza para conseguir maior eficiência de aprendizado?",
+                "matter": "desenvolvimento pessoal",
+                "tags": ["estudo", "aprendizado"]
+            }
+            ```
+        > Outros campos como "*image*" e "*alternatives*" também podem ser adicionados ao objeto *Question* se necessários, os dois são do tipo *string*.
