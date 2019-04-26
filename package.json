@@ -1,7 +1,7 @@
 {
-  "name": "atena",
-  "version": "1.0.0",
-  "description": "API Rest para aplicaçõa educacional",
+  "name": "mestre-splinter",
+  "version": "0.2.0",
+  "description": "API Rest para aplicativo educacional, desenvolvida no projeto de pesquisa da UNITINS",
   "main": "app.js",
   "scripts": {
     "start": "node ./src/app.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/l3onix/atena.git"
+    "url": "git+https://github.com/l3onix/mestre-splinter.git"
   },
   "author": "Leonardo Facundes <leonardo.fm00@gmail.com>",
   "license": "ISC",
