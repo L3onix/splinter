@@ -41,4 +41,16 @@ router.get('/matter/:matter', async(req, res) => {
     }
 });
 
+//rota para buscar por professor
+router.get('/teacher/:teacherId', async(req, res) => {
+    try{
+        const questions = await Question.find({createBy: req.params.teacherId});
+
+        return res.status(200).send(questions);
+    }catch(error){
+        console.log(error);
+        res.status(400).send({error: "Erro ao buscar por professor"});
+    }
+})
+
 module.exports = app => app.use('/question', router);
