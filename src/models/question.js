@@ -15,9 +15,9 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    alternatives:[{
+    answer:{
         type: String
-    }],
+    },
     matter:{
         type: String,
         lowercase: true
