@@ -1,5 +1,5 @@
 {
-  "name": "mestre-splinter",
+  "name": "splinter",
   "version": "0.2.0",
   "description": "API Rest para aplicativo educacional, desenvolvida no projeto de pesquisa da UNITINS",
   "main": "app.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/l3onix/mestre-splinter.git"
+    "url": "git+https://github.com/l3onix/splinter.git"
   },
   "author": "Leonardo Facundes <leonardo.fm00@gmail.com>",
   "license": "ISC",

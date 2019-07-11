@@ -1,4 +1,4 @@
-# MESTRE-SPLINTER
+# SPLINTER
 API Rest para aplicativo educacional. Desenvolvida durante o projeto de pesquisa da UNTIINS visando utilizar tecnologia de informação para auxiliar no processo de aprendizado e no desenvolvimento de novas metodologias de ensino.
 
 ## Rodando API localmente
