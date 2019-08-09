@@ -1,14 +1,14 @@
 //imports
 const express = require('express'),
-    router = express.Router(),
-    authMiddleware = require('../../middlewares/auth'),
-    Evaluation = require('../../models/evaluation'),
-    Solution = require('../../models/solution');
+    routerAuth = express.Router(),
+    authMiddleware = require('../middlewares/auth'),
+    Evaluation = require('../models/evaluation'),
+    Solution = require('../models/solution');
 
-router.use(authMiddleware);
+routerAuth.use(authMiddleware);
 
 //create Evaluation
-router.post('/:solutionId', async (req, res) => {
+routerAuth.post('/:solutionId', async (req, res) => {
     try {
         const evaluation = await Evaluation.create({ ...req.body, createBy: req.userId });
 
@@ -22,7 +22,7 @@ router.post('/:solutionId', async (req, res) => {
 });
 
 //edit Evaluation
-router.put('/:evaluationId', async (req, res) => {
+routerAuth.put('/:evaluationId', async (req, res) => {
     try{
         const evaluation = await Evaluation.findById(req.userId);
 
@@ -39,4 +39,4 @@ router.put('/:evaluationId', async (req, res) => {
 });
 
 //exports
-module.exports = app => app.use('/evaluationAuth', router);
+module.exports = app => app.use('/evaluation', routerAuth);

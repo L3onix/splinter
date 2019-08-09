@@ -1,9 +1,9 @@
 const express = require('express'),
     router = express.Router(),
     routerAuth = express.Router(),
-    authMiddleware = require('../../middlewares/auth'),
-    Solution = require('../../models/solution'),
-    Question = require('../../models/question');
+    authMiddleware = require('../middlewares/auth'),
+    Solution = require('../models/solution'),
+    Question = require('../models/question');
 
 routerAuth.use(authMiddleware);
 

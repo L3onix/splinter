@@ -1,9 +1,9 @@
 const express = require('express'),
     router = express.Router(),
     routerAuth = express.Router(),
-    authMiddleware = require('../../middlewares/auth'),
-    Question = require('../../models/question'),
-    Comment = require('../../models/comment');
+    authMiddleware = require('../middlewares/auth'),
+    Question = require('../models/question'),
+    Comment = require('../models/comment');
 
 routerAuth.use(authMiddleware);
 
@@ -30,7 +30,7 @@ routerAuth.post('/:questionId', async(req, res) => {
 /*
  * Descrição: rota para editar Comment utilizando um id de Comment
  * Retorno: retorna apenas uma confirmação de que a rota foi executada {upload: true}
-TODO: checar se o dono da requisição é o dono do comentário
+ * TODO: checar se o dono da requisição é o dono do comentário
  */
 routerAuth.put('/:commentId', async(req, res) => {
     try{
@@ -47,9 +47,9 @@ routerAuth.put('/:commentId', async(req, res) => {
 /*
  * Descrição: rota para deletar Comment utilizando um id de Comment
  * Retorno: retorna apenas uma confirmação de que a rota foi executada {delete: true}
-TODO: checar se o dono da req é o dono do comentario
-TODO: disponibilizar para professor excluir o comentário
-TODO: atualizar lista de comentários armazenados na questão
+ * TODO: checar se o dono da req é o dono do comentario
+ * TODO: disponibilizar para professor excluir o comentário
+ * TODO: atualizar lista de comentários armazenados na questão
  */
 routerAuth.delete('/:commentId', async(req, res) => {
     try{
