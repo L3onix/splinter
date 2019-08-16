@@ -16,11 +16,17 @@ const QuestionSchema = new mongoose.Schema({
         required: false
     },
     alternatives:[{
-        type: String
+        type: String,
+        required: false
     }],
+    answer:{
+        type: String,
+        required: false
+    },
     matter:{
         type: String,
-        lowercase: true
+        lowercase: true,
+        required: true
     },
     tags:[{
         type: String,
