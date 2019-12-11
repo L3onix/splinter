@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./src/app.js",
-    "nodemon": "nodemon ./src/app.js",
+    "dev": "nodemon ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,15 +15,15 @@
   "author": "Leonardo Facundes <leonardo.fm00@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/l3onix/atena/issues"
+    "url": "https://github.com/l3onix/splinter/issues"
   },
-  "homepage": "https://github.com/l3onix/atena#readme",
+  "homepage": "https://github.com/l3onix/splinter#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
-    "mongoose": ">=5.7.5",
+    "mongoose": "^5.7.5",
     "cors": "^2.8.5"
   }
 }
