@@ -5,6 +5,9 @@ const SolutionSchema = new mongoose.Schema({
     text:{
         type: String
     },
+    images: [{
+        type: String
+    }],
     createBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -18,9 +21,9 @@ const SolutionSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    evaluations:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Evaluation'
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
     }]
 });
 
