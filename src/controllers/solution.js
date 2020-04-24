@@ -3,7 +3,9 @@ const express = require('express'),
     routerAuth = express.Router(),
     authMiddleware = require('../middlewares/auth'),
     Solution = require('../models/solution'),
-    Question = require('../models/question');
+    Question = require('../models/question'),
+    questionHelper = require('../helpers/questionHelper'),
+    solutionHelper = require('../helpers/solutionHelper');
 
 routerAuth.use(authMiddleware);
 
@@ -11,20 +13,21 @@ routerAuth.use(authMiddleware);
 // ROTAS COM AUTENTICAÇÃO
 /*
  * Descrição: rota para criar Solution utilizando um id de Question
- * Retorno: pacote json com lista de Question filtradas por matter
  */
-routerAuth.post('/:questionId', async (req, res) => {
-    if(checkQuestionExists(req.params.questionId)){
+routerAuth.post('/', async (req, res) => {
+    const questionId = req.body.questionId;
+    if(checkQuestionExists(questionId)){
+
         try {
             //buscando usuário
-            const question = await Question.findById(req.params.questionId);
+            const question = await Question.findById(questionId);
             //criando nova solução
             const solution = await Solution.create({ ...req.body, createBy: req.userId });
             //atualiza a questão com o id da solução
-            await Question.update({ _id: req.params.questionId }, { $push: { solutions: solution.id } });
-            //console.log(solucao.id);
+            await Question.update({ _id: questionId }, { $push: { solutions: solution.id } });
+            const teste = await Question.findById(questionId);
 
-            return res.status(200).send({ create: true });
+            return res.status(200).send({solution, teste});
         } catch (error) {
             console.log(error);
             return res.status(400).send({ error: 'Erro ao criar nova solução' });
@@ -35,8 +38,46 @@ routerAuth.post('/:questionId', async (req, res) => {
 });
 
 /*
+ * Descrição: rota que possibilita avalição (like, dislike) de uma Solution
+ */
+routerAuth.post('/:solutionId', async (req, res) => {
+    const userId = req.userId
+    const solutionId = req.params.solutionId
+    const solution = await solutionHelper.checkSolutionExists(solutionId)
+    if(solution){
+        try{
+            if(req.body.evaluate == 0){ // se for dislike
+                if(solution.likes.includes(userId)){
+                    await Solution.updateOne({_id: solutionId}, {$pull: {likes: userId}})
+                }if(!solution.dislikes.includes(userId)){
+                    await Solution.updateOne({_id: solutionId}, {$push: {dislikes: userId}})
+                }
+            }else if(req.body.evaluate == 1){   // se for like
+                if(solution.dislikes.includes(userId)){
+                    await Solution.updateOne({_id: solutionId}, {$pull: {dislikes: userId}})
+                }if(!solution.likes.includes(userId)){
+                    await Solution.updateOne({_id: solutionId}, {$push: {likes: userId}})
+                }
+            }else if(req.body.evaluate == null){    // se for remover avaliação
+                if(solution.dislikes.includes(userId)){
+                    await Solution.updateOne({_id: solutionId}, {$pull: {dislikes: userId}})
+                }else if(solution.likes.includes(userId)){
+                    await Solution.updateOne({_id: solutionId}, {$pull: {likes: userId}})
+                }
+            }else{  // qualquer outra entrada
+                return res.status(400).send()
+            }
+            return res.status(200).send(await Solution.findById(solutionId))
+        }catch(error){
+            console.log(error)
+            return res.status(400).send({error: 'Erro ao registrar avaliação'})
+        }
+    }
+    return res.status(400).send()
+});
+
+/*
  * Descrição: rota para editar Solution utilizando um id de Solution
- * Retorno: pacote json com lista de Question filtradas por matter
  */
 routerAuth.put('/:solutionId', async (req, res) => {
     const userId = req.userId;
@@ -127,7 +168,8 @@ router.get('/:solutionId', async (req, res) => {
  */
 router.get('/', async (req, res) => {
     try{
-        var solution = await Solution.find();
+        const solutions = await Solution.find();
+        return res.status(200).send(solutions);
     }catch(error){
         console.log(error);
         return res.status(400).send({error: 'Erro ao buscar soluções'});
@@ -150,6 +192,6 @@ async function checkQuestionExists(questionId){
 
 // EXPORTS
 module.exports = app => {
-    app.use('/solution', routerAuth);
     app.use('/solution', router);
+    app.use('/solution', routerAuth);
 };
