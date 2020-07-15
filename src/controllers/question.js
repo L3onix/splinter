@@ -18,8 +18,8 @@ routerAuth.post('/', async (req, res) => {
         //checando se o usuário é professor
         if(await checkFlag(req.userId)){
             //criando Questao
-            await Question.create({...req.body, createBy: req.userId});
-            res.status(200).send({status: 'Sucesso ao criar questão'});
+            const question = await Question.create({...req.body, createBy: req.userId});
+            res.status(200).send({status: 'Sucesso ao criar questão', _id: question._id});
         }else{
             res.status(400).send({error: 'Usuário não é professor'});
         }

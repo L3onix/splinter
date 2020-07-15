@@ -7,32 +7,32 @@ const app = require('../src/app')
 
 chai.use(chaiHttp)
 
-const address = 'http://localhost:9000/'
 const account = {
-    email: 'leonardo@teste.com',
-    password: 'default1'
+    'email': 'leonardo@teste.com',
+    'password': 'default1'
 }
 
-const agent = chai.request.agent(address)
-agent.post('auth/authenticate')
-    .send(account)
-    .then((res) => {
-        expect(res).to.have.
+module.exports = () => {
+    let token = ''
+	let questionId = ''
+    describe('Login', () => {
+        it('Login e captura de token', (done) => {
+            chai.request(app)
+                .post('/auth/authenticate')
+                .send(account)
+                .end((err, res) => {
+                    res.should.have.status(200)
+                    res.body.should.be.an('object')
+                    token = res.body.token
+                    done()
+                })
+        })
     })
 
-module.exports = () => {
-    before('Autenticacao', (done) => {
-        authenticatedUser.post('/auth/authenticate')
-            .send(account)
-            .end((err, res) => {
-                expect(res).to.have.status(200)
-                done()
-            })
-    })
     describe('/GET Questions', () => {
         it('Testando GET todos as Questions', (done) => {
-            chai.request(address)
-                .get('question/')
+            chai.request(app)
+                .get('/question')
                 .end((err, res) => {
                     if(err) done(err)
 
@@ -54,15 +54,53 @@ module.exports = () => {
                 "tags": ["test", "chai"]
             }
 
-            chai.request(address)
-                .post('question')
-                .set({"Authorization": `Bearer `})
+            chai.request(app)
+                .post('/question')
+                .set('Authorization', `Bearer ${token}`)
                 .send(question)
                 .end((err, res) => {
                     if(err) done(err)
 
                     expect(res).to.have.status(200)
-                    expect(res.body.status).to.be.and('ok')
+					questionId = res.body._id
+                    done()
+                })
+        })
+    })
+
+    describe('/PUT Questions', () => {
+        it('Editando questão', (done) => {
+            const question = {
+                "font": "test",
+                "statement": "Chai test for POST Question",
+                "alternatives": ["a", "b", "c"],
+                "answer": "a",
+                "matter": "Chai Test",
+                "tags": ["test", "chai"]
+            }
+
+            chai.request(app)
+                .put('/question/' + questionId)
+                .set('Authorization', `Bearer ${token}`)
+                .send(question)
+                .end((err, res) => {
+                    if(err) done(err)
+
+                    expect(res).to.have.status(200)
+                    done()
+                })
+        })
+    })
+
+    describe('/DELETE Questions', () => {
+        it('Deletando questão', (done) => {
+            chai.request(app)
+                .delete('/question/' + questionId)
+                .set('Authorization', `Bearer ${token}`)
+                .end((err, res) => {
+                    if(err) done(err)
+
+                    expect(res).to.have.status(200)
                     done()
                 })
         })

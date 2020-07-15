@@ -32,3 +32,5 @@ var server = app.listen(process.env.PORT || 9000, function(){
 
     console.log('API escutando porta '+port);
 });
+
+module.exports = app
