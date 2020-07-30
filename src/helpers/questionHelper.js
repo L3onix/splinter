@@ -4,7 +4,8 @@ module.exports = {
     async checkQuestionExists(questionId){
         try{
             const question = await Question.findById(questionId)
-            return true
+            if (question) return true
+            return false
         }catch(error){
             return false
         }

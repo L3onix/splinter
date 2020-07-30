@@ -13,10 +13,9 @@ const account = {
 }
 
 module.exports = () => {
-    let token = ''
-	let questionId = ''
-    describe('Login', () => {
-        it('Login e captura de token', (done) => {
+    let token, questionId
+    describe('', () => {
+        before((done) => {
             chai.request(app)
                 .post('/auth/authenticate')
                 .send(account)
@@ -27,10 +26,7 @@ module.exports = () => {
                     done()
                 })
         })
-    })
-
-    describe('/GET Questions', () => {
-        it('Testando GET todos as Questions', (done) => {
+        it('GET Listando Question', (done) => {
             chai.request(app)
                 .get('/question')
                 .end((err, res) => {
@@ -41,10 +37,7 @@ module.exports = () => {
                     done()
                 })
         })
-    })
-
-    describe('/POST Questions', () => {
-        it('Teste POST Question', (done) => {
+        it('POST Criando Question', (done) => {
             const question = {
                 "font": "test",
                 "statement": "Chai test for POST Question",
@@ -66,10 +59,7 @@ module.exports = () => {
                     done()
                 })
         })
-    })
-
-    describe('/PUT Questions', () => {
-        it('Editando questão', (done) => {
+        it('PUT Editando Question', (done) => {
             const question = {
                 "font": "test",
                 "statement": "Chai test for POST Question",
@@ -90,10 +80,7 @@ module.exports = () => {
                     done()
                 })
         })
-    })
-
-    describe('/DELETE Questions', () => {
-        it('Deletando questão', (done) => {
+        it('DELETE Deletando Question', (done) => {
             chai.request(app)
                 .delete('/question/' + questionId)
                 .set('Authorization', `Bearer ${token}`)
