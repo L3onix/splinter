@@ -121,44 +121,23 @@ routerAuth.delete('/:solutionId', async (req, res) => {
     }
 });
 
-// ROTAS SEM AUTENTICAÇÃO
-/*
- * Descrição: busca todas as Solution filtrando pelo usuário que criou usando um id de User
- * Retorno: pacote json com lista de Question filtradas por matter
- */
-router.get('/:userId', async (req, res) => {
-    // TODO: verificar se User existe e buscar sua lista de Solution
-    try {
-        solucoes = await Solucao.find();
+routerAuth.get('/:solutionId', async (req, res) => {
+    const userId = req.userId
+    Solution.findById(req.params.solutionId, (err, solution) => {
+        if(err) return res.status(400).send(err)
 
-        return res.status(200).send({ solucoes });
-    } catch (err) {
-        return res.status(400).send({ err: 'Erro ao buscar soluções' });
-    }
-});
-
-/*
- * Descrição: rota para buscar Solution utilizando um id de Solution
- * Retorno: pacote json com lista de Question filtradas por matter
- */
-router.get('/:solutionId', async (req, res) => {
-    try{
-        var solution = await Solution.findById(req.params.solutionId);
-        //se existir solucao
-        if(solution != null){
-            solution.visualization ++;
-            //console.log(solucao.visualizacoes);
-            solution = await Solution.findByIdAndUpdate(req.params.solutionId, solution, {new: true});
-            return res.status(200).send(solution);
-        }else{
-            return res.status(400).send({error: 'Solução não encontrada'});
+        // formatando solution
+        let userEvaluate = ''
+        if(solution.likes.includes(userId)){
+            userEvaluate = 'like'
+        }else if(solution.dislikes.includes(userId)){
+            userEvaluate = 'dislike'
         }
-
-    }catch(error){
-        console.log(error);
-        return res.status(400).send({error: 'Erro ao buscar solução'});
-    }
-    
+        solution._doc.likes = solution.likes.length
+        solution._doc.dislikes = solution.dislikes.length
+        
+        res.status(200).send({solution, "userEvaluate": userEvaluate})
+    })
 });
 
 /*
