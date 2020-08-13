@@ -76,7 +76,14 @@ routerAuth.delete('/:questionId', async(req, res) => {
  */
 router.get('/', async(req, res) => {
     try{
-        const question = await Question.find();
+        const matter = req.body.matter
+        const limit = req.body.limit
+		let question
+		if(matter){
+        	question = await Question.find({matter: matter}).limit(limit).sort('createAt');
+		}else{
+			question = await Question.find();
+		}
 
         return res.status(200).send(question);
     }catch(error){
@@ -100,21 +107,6 @@ router.get('/:questionId', async(req, res) => {
     }catch(error){
         console.log(error);
         res.status(400).send({error: "Erro ao carregar questão"});
-    }
-});
-
-/*
- * Descrição: rota para buscar por descritor
- * Retorno: pacote json com lista de Question filtradas por matter
- */
-router.get('/matter/:matter', async(req, res) => {
-    try{
-        const questions = await Question.find({matter: req.params.matter});
-
-        return res.status(200).send(questions);
-    }catch(error){
-        console.log(error);
-        res.status(400).send({error: "Erro ao buscar por descritor"});
     }
 });
 
