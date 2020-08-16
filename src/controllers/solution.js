@@ -121,39 +121,34 @@ routerAuth.delete('/:solutionId', async (req, res) => {
     }
 });
 
-routerAuth.get('/:solutionId', async (req, res) => {
-    const userId = req.userId
-    Solution.findById(req.params.solutionId, (err, solution) => {
-        if(err) return res.status(400).send(err)
+router.get('/:solutionId', async (req, res) => {
+	if(req.headers.authorization){
+		authMiddleware(req, res, ()=>{})
+		const userId = req.userId
 
-        // formatando solution
-        let userEvaluate = ''
-        if(solution.likes.includes(userId)){
-            userEvaluate = 'like'
-        }else if(solution.dislikes.includes(userId)){
-            userEvaluate = 'dislike'
-        }
-        solution._doc.likes = solution.likes.length
-        solution._doc.dislikes = solution.dislikes.length
-        
-        res.status(200).send({solution, "userEvaluate": userEvaluate})
-    })
+		Solution.findById(req.params.solutionId, (err, solution) => {
+			if(err) return res.status(400).send(err)
+
+			// formatando solution
+			let userEvaluate = ''
+			if(solution.likes.includes(userId)){
+				userEvaluate = 'like'
+			}else if(solution.dislikes.includes(userId)){
+				userEvaluate = 'dislike'
+			}
+			solution._doc.likes = solution.likes.length
+			solution._doc.dislikes = solution.dislikes.length
+			
+			res.status(200).send({solution, "userEvaluate": userEvaluate})
+		})
+	}
+	Solution.findById(req.params.solutionId, (err, solution) => {
+		if(err) return res.status(400).send(err)
+
+		res.status(200).send({solution})
+	})
 });
 
-/*
- * !!! USAR SOMENTE PARA TESTES !!!
- * Descrição: lista todas as Solution armazenadas no banco de dados
- * Retorno: objeto json com uma lista com todos as Solution
- */
-router.get('/', async (req, res) => {
-    try{
-        const solutions = await Solution.find();
-        return res.status(200).send(solutions);
-    }catch(error){
-        console.log(error);
-        return res.status(400).send({error: 'Erro ao buscar soluções'});
-    }
-});
 
 // FUNÇÕES AUXILIARES
 /*
