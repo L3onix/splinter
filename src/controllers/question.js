@@ -1,19 +1,15 @@
 const express = require('express'),
     router = express.Router(),
-    routerAuth = express.Router(),
     authMiddleware = require('../middlewares/auth'),
     Question = require('../models/question'),
     User = require('../models/user');
-
-//adicionando middleware de autenticação ao routerAuth
-routerAuth.use(authMiddleware);
 
 // ROTAS COM AUTENTICAÇÃO
 /*
  * Descrição: rota para criar Question
  * Retorno: apenas uma mensagem confirmando que a Question foi criada
  */
-routerAuth.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
     try{
         //checando se o usuário é professor
         if(await checkFlag(req.userId)){
@@ -33,7 +29,7 @@ routerAuth.post('/', async (req, res) => {
  * Descrição: rota para editar Question
  * Retorno: apenas uma mensagem confirmando que a Question foi editada
  */
-routerAuth.put('/:questionId', async(req, res) => {
+router.put('/:questionId', authMiddleware, async(req, res) => {
     try{
         //checando se o usuário é professor
         if(await checkCreator(req.userId, req.params.questionId)){
@@ -53,7 +49,7 @@ routerAuth.put('/:questionId', async(req, res) => {
  * Descrição: rota para deletar Question
  * Retorno: apenas uma mensagem confirmando que a Question foi deletada
  */
-routerAuth.delete('/:questionId', async(req, res) => {
+router.delete('/:questionId', authMiddleware, async(req, res) => {
     try{
         //checando se o usuário é professor
         if(await checkCreator(req.userId, req.params.questionId)){
@@ -140,5 +136,4 @@ async function checkCreator(userId, questionId){
 // EXPORTS
 module.exports = app => {
     app.use('/question', router);
-    app.use('/question', routerAuth);
 };
