@@ -54,16 +54,20 @@ const QuestionSchema = new mongoose.Schema({
 
 // checando se o usuário tem a flag 'teacher'
 QuestionSchema.pre('save', async function(next){
-	console.log(this.createBy)
-	const user = await User.findById(this.createBy)
-	console.log(user)
-	if(user.flag == 'teacher'){
-		next()
-	}else{
-		const err = Error('Usuário não tem autorização para este tipo de operação!')
-		next(err)
+    await checkFlag(this) ? next() : next(new Error('Usuário não tem autorização para este tipo de operação!'))
+})
+
+// checando se o usuário foi quem criou a Question
+QuestionSchema.pre('updateOne', async function(next) {
+	if(!await checkFlag(this._update)){
+		next(new Error('Usuário não tem autorização para este tipo de operação!'))
 	}
 })
+
+async function checkFlag(question) {
+    const user = await User.findById(question.createBy)
+    return(user.flag == 'teacher')
+}
 
 //criando objeto de banco de dados que segue o modelo QuestaoSchema
 const Question = mongoose.model('Question', QuestionSchema);

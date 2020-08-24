@@ -25,14 +25,17 @@ router.post('/', authMiddleware, async (req, res) => {
  */
 router.put('/:questionId', authMiddleware, async(req, res) => {
     try{
-        //checando se o usuário é professor
-        if(await checkCreator(req.userId, req.params.questionId)){
-            //editando Questao
-            await Question.findByIdAndUpdate(req.params.questionId, req.body);
-            res.status(200).send({status: 'Sucesso ao editar questão'});
-        }else{
-            res.status(400).send({error: 'Usuário não controla esta questão'});
-        }
+        ////checando se o usuário é professor
+        //if(await checkCreator(req.userId, req.params.questionId)){
+        //    //editando Questao
+        //    await Question.findByIdAndUpdate(req.params.questionId, req.body);
+        //    res.status(200).send({status: 'Sucesso ao editar questão'});
+        //}else{
+        //    res.status(400).send({error: 'Usuário não controla esta questão'});
+        //}
+		req.body.createBy = req.userId
+		const question = await Question.updateOne(req.params.questionid, req.body)
+		res.status(200).send(question)
     }catch(error){
         console.log(error);
         res.status(400).send({error: 'Erro ao editar questão'});
