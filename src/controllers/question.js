@@ -11,14 +11,8 @@ const express = require('express'),
  */
 router.post('/', authMiddleware, async (req, res) => {
     try{
-        //checando se o usuário é professor
-        if(await checkFlag(req.userId)){
-            //criando Questao
-            await Question.create({...req.body, createBy: req.userId});
-            res.status(200).send({status: 'Sucesso ao criar questão'});
-        }else{
-            res.status(400).send({error: 'Usuário não é professor'});
-        }
+		const question = await Question.create({...req.body, createBy: req.userId})
+        res.status(200).send(question);
     }catch(error){
         console.log(error);
         res.status(400).send({error: 'Erro ao criar questão'});
@@ -105,20 +99,6 @@ router.get('/:questionId', async(req, res) => {
         res.status(400).send({error: "Erro ao carregar questão"});
     }
 });
-
-// FUNÇÕES AUXILIARES
-/*
- * Descrição: função que verifica se a userId é um professor
- * Retorno: boolean
- */
-async function checkFlag(userId){
-    const user = await User.findById(userId);
-    if(user.flag == 'teacher'){
-        return true;
-    }else{
-        return false;
-    }
-}
 
 /*
  * Descrição: função que verifica se o userId da requisição é o mesmo do createBy da Question
