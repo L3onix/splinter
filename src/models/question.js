@@ -62,11 +62,15 @@ QuestionSchema.pre('updateOne', async function(next) {
 	if(!await checkFlag(this._update)){
 		next(new Error('Usuário não tem autorização para este tipo de operação!'))
 	}
+
 })
 
 async function checkFlag(question) {
     const user = await User.findById(question.createBy)
     return(user.flag == 'teacher')
+}
+async function checkCreator(question) {
+
 }
 
 //criando objeto de banco de dados que segue o modelo QuestaoSchema
