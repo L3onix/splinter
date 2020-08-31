@@ -62,16 +62,18 @@ QuestionSchema.pre('updateOne', async function(next) {
 	if(!await checkFlag(this._update)){
 		next(new Error('Usuário não tem autorização para este tipo de operação!'))
 	}
-
+    await checkCreator(this._update.createBy, this.getQuery()._id) ? next() : next(new Error('Usuário não tem autorização para este tipo de operação!'))
 })
 
 async function checkFlag(question) {
     const user = await User.findById(question.createBy)
     return(user.flag == 'teacher')
 }
-async function checkCreator(question) {
-
+async function checkCreator(editorId, questionId ) {
+    const question = await Question.findById(questionId)
+    return(question.createBy == editorId)
 }
+
 
 //criando objeto de banco de dados que segue o modelo QuestaoSchema
 const Question = mongoose.model('Question', QuestionSchema);
