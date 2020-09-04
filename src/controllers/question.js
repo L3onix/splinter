@@ -59,15 +59,14 @@ router.delete('/:questionId', authMiddleware, async(req, res) => {
  */
 router.get('/', async(req, res) => {
     try{
-        const matter = req.body.matter
+        const skip = req.body.skip
         const limit = req.body.limit
-		let question
-		if(matter){
-        	question = await Question.find({matter: matter}).limit(limit).sort('createAt');
-		}else{
-			question = await Question.find();
-		}
+        var query = {}
 
+        req.body.matter ? query.matter = req.body.matter : null
+        req.body.font ? query.font = req.body.font : null
+
+        const question = await Question.find(query).limit(limit).skip(skip).sort('createAt');
         return res.status(200).send(question);
     }catch(error){
         console.log(error);
