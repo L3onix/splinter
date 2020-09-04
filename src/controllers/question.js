@@ -43,14 +43,9 @@ router.put('/:questionId', authMiddleware, async(req, res) => {
  */
 router.delete('/:questionId', authMiddleware, async(req, res) => {
     try{
-        //checando se o usuário é professor
-        if(await checkCreator(req.userId, req.params.questionId)){
-            //deletando Questao
-            await Question.findByIdAndRemove(req.params.questionId);
-            res.status(200).send({status: 'Sucesso ao deletar questão'});
-        }else{
-            res.status(400).send({error: 'Usuário não é professor'});
-        }
+        const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
+        const question = await Question.findOneAndDelete(query)
+        question ? res.status(200).send(question) : res.status(400).send({error: 'Erro ao deletar questão'})
     }catch(error){
         console.log(error);
         res.status(400).send({error: 'Erro ao deletar questão'});
