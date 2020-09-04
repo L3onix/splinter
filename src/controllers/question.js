@@ -1,28 +1,19 @@
 const express = require('express'),
     router = express.Router(),
-    routerAuth = express.Router(),
     authMiddleware = require('../middlewares/auth'),
     Question = require('../models/question'),
-    User = require('../models/user');
-
-//adicionando middleware de autenticação ao routerAuth
-routerAuth.use(authMiddleware);
+    User = require('../models/user'),
+    ObjectId = require('mongoose').Types.ObjectId;
 
 // ROTAS COM AUTENTICAÇÃO
 /*
  * Descrição: rota para criar Question
  * Retorno: apenas uma mensagem confirmando que a Question foi criada
  */
-routerAuth.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
     try{
-        //checando se o usuário é professor
-        if(await checkFlag(req.userId)){
-            //criando Questao
-            await Question.create({...req.body, createBy: req.userId});
-            res.status(200).send({status: 'Sucesso ao criar questão'});
-        }else{
-            res.status(400).send({error: 'Usuário não é professor'});
-        }
+		const question = await Question.create({...req.body, createBy: req.userId})
+        res.status(200).send(question);
     }catch(error){
         console.log(error);
         res.status(400).send({error: 'Erro ao criar questão'});
@@ -33,16 +24,13 @@ routerAuth.post('/', async (req, res) => {
  * Descrição: rota para editar Question
  * Retorno: apenas uma mensagem confirmando que a Question foi editada
  */
-routerAuth.put('/:questionId', async(req, res) => {
+router.put('/:questionId', authMiddleware, async(req, res) => {
     try{
-        //checando se o usuário é professor
-        if(await checkCreator(req.userId, req.params.questionId)){
-            //editando Questao
-            await Question.findByIdAndUpdate(req.params.questionId, req.body);
-            res.status(200).send({status: 'Sucesso ao editar questão'});
-        }else{
-            res.status(400).send({error: 'Usuário não controla esta questão'});
-        }
+        const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
+		//req.body.createBy = req.userId
+		//const question = await Question.updateOne({_id: req.params.questionId, createBy: req.userId}, req.body)
+		const question = await Question.findOneAndUpdate(query, req.body)
+        question ? res.status(200).send(question) : res.status(400).send({error: 'Erro ao editar questão'})
     }catch(error){
         console.log(error);
         res.status(400).send({error: 'Erro ao editar questão'});
@@ -53,16 +41,11 @@ routerAuth.put('/:questionId', async(req, res) => {
  * Descrição: rota para deletar Question
  * Retorno: apenas uma mensagem confirmando que a Question foi deletada
  */
-routerAuth.delete('/:questionId', async(req, res) => {
+router.delete('/:questionId', authMiddleware, async(req, res) => {
     try{
-        //checando se o usuário é professor
-        if(await checkCreator(req.userId, req.params.questionId)){
-            //deletando Questao
-            await Question.findByIdAndRemove(req.params.questionId);
-            res.status(200).send({status: 'Sucesso ao deletar questão'});
-        }else{
-            res.status(400).send({error: 'Usuário não é professor'});
-        }
+        const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
+        const question = await Question.findOneAndDelete(query)
+        question ? res.status(200).send(question) : res.status(400).send({error: 'Erro ao deletar questão'})
     }catch(error){
         console.log(error);
         res.status(400).send({error: 'Erro ao deletar questão'});
@@ -76,15 +59,14 @@ routerAuth.delete('/:questionId', async(req, res) => {
  */
 router.get('/', async(req, res) => {
     try{
-        const matter = req.body.matter
+        const skip = req.body.skip
         const limit = req.body.limit
-		let question
-		if(matter){
-        	question = await Question.find({matter: matter}).limit(limit).sort('createAt');
-		}else{
-			question = await Question.find();
-		}
+        var query = {}
 
+        req.body.matter ? query.matter = req.body.matter : null
+        req.body.font ? query.font = req.body.font : null
+
+        const question = await Question.find(query).limit(limit).skip(skip).sort('createAt');
         return res.status(200).send(question);
     }catch(error){
         console.log(error);
@@ -110,20 +92,6 @@ router.get('/:questionId', async(req, res) => {
     }
 });
 
-// FUNÇÕES AUXILIARES
-/*
- * Descrição: função que verifica se a userId é um professor
- * Retorno: boolean
- */
-async function checkFlag(userId){
-    const user = await User.findById(userId);
-    if(user.flag == 'teacher'){
-        return true;
-    }else{
-        return false;
-    }
-}
-
 /*
  * Descrição: função que verifica se o userId da requisição é o mesmo do createBy da Question
  * Retorno: boolean
@@ -140,5 +108,4 @@ async function checkCreator(userId, questionId){
 // EXPORTS
 module.exports = app => {
     app.use('/question', router);
-    app.use('/question', routerAuth);
 };
