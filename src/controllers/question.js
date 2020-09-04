@@ -2,7 +2,8 @@ const express = require('express'),
     router = express.Router(),
     authMiddleware = require('../middlewares/auth'),
     Question = require('../models/question'),
-    User = require('../models/user');
+    User = require('../models/user'),
+    ObjectId = require('mongoose').Types.ObjectId;
 
 // ROTAS COM AUTENTICAÇÃO
 /*
@@ -25,9 +26,11 @@ router.post('/', authMiddleware, async (req, res) => {
  */
 router.put('/:questionId', authMiddleware, async(req, res) => {
     try{
-		req.body.createBy = req.userId
-		const question = await Question.updateOne({_id: req.params.questionId}, req.body)
-		res.status(200).send(question)
+        const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
+		//req.body.createBy = req.userId
+		//const question = await Question.updateOne({_id: req.params.questionId, createBy: req.userId}, req.body)
+		const question = await Question.findOneAndUpdate(query, req.body)
+        question ? res.status(200).send(question) : res.status(400).send({error: 'Erro ao editar questão'})
     }catch(error){
         console.log(error);
         res.status(400).send({error: 'Erro ao editar questão'});

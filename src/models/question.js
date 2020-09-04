@@ -58,12 +58,12 @@ QuestionSchema.pre('save', async function(next){
 })
 
 // checando se o usuário foi quem criou a Question
-QuestionSchema.pre('updateOne', async function(next) {
-	if(!await checkFlag(this._update)){
-		next(new Error('Usuário não tem autorização para este tipo de operação!'))
-	}
-    await checkCreator(this._update.createBy, this.getQuery()._id) ? next() : next(new Error('Usuário não tem autorização para este tipo de operação!'))
-})
+//QuestionSchema.pre('updateOne', async function(next) {
+//	if(!await checkFlag(this._update)){
+//		next(new Error('Usuário não tem autorização para este tipo de operação!'))
+//	}
+//    //await checkCreator(this._update.createBy, this.getQuery()._id) ? next() : next(new Error('Usuário não tem autorização para este tipo de operação!'))
+//})
 
 async function checkFlag(question) {
     const user = await User.findById(question.createBy)
