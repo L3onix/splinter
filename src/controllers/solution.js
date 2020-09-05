@@ -1,20 +1,15 @@
 const express = require('express'),
     router = express.Router(),
-    routerAuth = express.Router(),
     authMiddleware = require('../middlewares/auth'),
     Solution = require('../models/solution'),
     Question = require('../models/question'),
     questionHelper = require('../helpers/questionHelper'),
     solutionHelper = require('../helpers/solutionHelper');
 
-routerAuth.use(authMiddleware);
-
-
-// ROTAS COM AUTENTICAÇÃO
 /*
  * Descrição: rota para criar Solution utilizando um id de Question
  */
-routerAuth.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
     const questionId = req.body.questionId;
     if(checkQuestionExists(questionId)){
 
@@ -24,7 +19,7 @@ routerAuth.post('/', async (req, res) => {
             //criando nova solução
             const solution = await Solution.create({ ...req.body, createBy: req.userId });
             //atualiza a questão com o id da solução
-            await Question.update({ _id: questionId }, { $push: { solutions: solution.id } });
+            await Question.updateOne({ _id: questionId }, { $push: { solutions: solution.id } });
             const teste = await Question.findById(questionId);
 
             return res.status(200).send({solution, teste});
@@ -40,7 +35,7 @@ routerAuth.post('/', async (req, res) => {
 /*
  * Descrição: rota que possibilita avalição (like, dislike) de uma Solution
  */
-routerAuth.post('/:solutionId', async (req, res) => {
+router.post('/:solutionId', authMiddleware, async (req, res) => {
     const userId = req.userId
     const solutionId = req.params.solutionId
     const solution = await solutionHelper.checkSolutionExists(solutionId)
@@ -79,7 +74,7 @@ routerAuth.post('/:solutionId', async (req, res) => {
 /*
  * Descrição: rota para editar Solution utilizando um id de Solution
  */
-routerAuth.put('/:solutionId', async (req, res) => {
+router.put('/:solutionId', authMiddleware, async (req, res) => {
     const userId = req.userId;
     //console.log (userId);
 
@@ -106,7 +101,7 @@ routerAuth.put('/:solutionId', async (req, res) => {
  * Descrição: rota para deletar Solution utilizando um id de Solution
  * Retorno: pacote json com lista de Question filtradas por matter
  */
-routerAuth.delete('/:solutionId', async (req, res) => {
+router.delete('/:solutionId', authMiddleware, async (req, res) => {
     try {
         const solution = await Solution.findById(req.params.solutionId);
         if (solution.createBy == req.userId) {
@@ -167,5 +162,4 @@ async function checkQuestionExists(questionId){
 // EXPORTS
 module.exports = app => {
     app.use('/solution', router);
-    app.use('/solution', routerAuth);
 };
