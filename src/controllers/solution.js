@@ -10,26 +10,32 @@ const express = require('express'),
  * Descrição: rota para criar Solution utilizando um id de Question
  */
 router.post('/', authMiddleware, async (req, res) => {
-    const questionId = req.body.questionId;
-    if(checkQuestionExists(questionId)){
-
-        try {
-            //buscando usuário
-            const question = await Question.findById(questionId);
-            //criando nova solução
-            const solution = await Solution.create({ ...req.body, createBy: req.userId });
-            //atualiza a questão com o id da solução
-            await Question.updateOne({ _id: questionId }, { $push: { solutions: solution.id } });
-            const teste = await Question.findById(questionId);
-
-            return res.status(200).send({solution, teste});
-        } catch (error) {
-            console.log(error);
-            return res.status(400).send({ error: 'Erro ao criar nova solução' });
-        }
-    }else{
+    try{
+        const questionId = req.body.questionId;
+        const solution = await Solution.create({ ...req.body, createBy: req.userId })
+    }catch(err){
+        console.log(err)
         return res.status(400).send({error: 'ID de Question não existe'});
     }
+//    if(checkQuestionExists(questionId)){
+//
+//        try {
+//            //buscando usuário
+//            const question = await Question.findById(questionId);
+//            //criando nova solução
+//            const solution = await Solution.create({ ...req.body, createBy: req.userId });
+//            //atualiza a questão com o id da solução
+//            await Question.updateOne({ _id: questionId }, { $push: { solutions: solution.id } });
+//            const teste = await Question.findById(questionId);
+//
+//            return res.status(200).send({solution, teste});
+//        } catch (error) {
+//            console.log(error);
+//            return res.status(400).send({ error: 'Erro ao criar nova solução' });
+//        }
+//    }else{
+//        return res.status(400).send({error: 'ID de Question não existe'});
+//    }
 });
 
 /*
