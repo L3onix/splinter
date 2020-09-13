@@ -20,10 +20,11 @@ app.get('/', (req, res) => {
 
 
 //import de controllers
-require('./controllers/authController')(app);
-require('./controllers/question')(app);
+//require('./controllers/authController')(app);
+require('./routes')(app)
+//require('./controllers/question')(app);
 require('./controllers/comment')(app);
-require('./controllers/solution')(app);
+//require('./controllers/solution')(app);
 
 //inicialização do servidor na porta 9000
 var server = app.listen(process.env.PORT || 9000, function(){

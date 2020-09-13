@@ -31,14 +31,6 @@ const SolutionSchema = new mongoose.Schema({
     }]
 });
 
-SolutionSchema.pre('save', async function(next){
-
-})
-
-async function checkQuestion(questionId) {
-
-}
-
 //definindo que 'Solucao' segue o model 'SolucaoSchema'
 const Solution = mongoose.model('Solution', SolutionSchema);
 
