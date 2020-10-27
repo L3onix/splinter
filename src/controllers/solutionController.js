@@ -5,7 +5,7 @@ const authMiddleware = require('../middlewares/auth'),
 
 module.exports = class SolutionController {
     async list(req, res){
-        if(req.headers.authorization){
+        if(req.headers.authorization){  // retorna uma Solution com a avaliação do usuário
             authMiddleware(req, res, ()=>{})
             const userId = req.userId
 

@@ -1,5 +1,4 @@
 const Question = require('../models/question'),
-    User = require('../models/user'),
     ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class QuestionController {
@@ -32,7 +31,7 @@ module.exports = class QuestionController {
         try{
             const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
             const question = await Question.findOneAndUpdate(query, req.body)
-            question ? res.status(200).send(question) : res.status(400).send({error: 'Erro ao editar questão'})
+            res.status(200).send(question)
         }catch(error){
             console.log(error);
             res.status(400).send({error: 'Erro ao editar questão'});
@@ -43,7 +42,7 @@ module.exports = class QuestionController {
         try{
             const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
             const question = await Question.findOneAndDelete(query)
-            question ? res.status(200).send(question) : res.status(400).send({error: 'Erro ao deletar questão'})
+            res.status(200).send(question)
         }catch(error){
             console.log(error);
             res.status(400).send({error: 'Erro ao deletar questão'});
