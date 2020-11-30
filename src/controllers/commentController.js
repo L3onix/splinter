@@ -1,5 +1,5 @@
 const Comment = require('../models/comment'),
-    ObjectId = require('monogoose').Types.ObjectId;
+    ObjectId = require('mongoose').Types.ObjectId;
 
 
 module.exports = class CommentController {

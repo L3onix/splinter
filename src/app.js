@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 //require('./controllers/authController')(app);
 require('./routes')(app)
 //require('./controllers/question')(app);
-require('./controllers/comment')(app);
+//require('./controllers/comment')(app);
 //require('./controllers/solution')(app);
 
 //inicialização do servidor na porta 9000
