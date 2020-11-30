@@ -1,0 +1,15 @@
+version: '3.1'
+services:
+  database:
+    image: 'mongo'
+    container_name: 'splinter-db'
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: default1
+      MONGO_INITDB_DATABASE: splinter
+    volumes:
+      - ./mongodb-data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    ports:
+      - '27017-27019:27017-27019'
