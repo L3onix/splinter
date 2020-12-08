@@ -11,7 +11,7 @@ module.exports = class questionRepository {
         //caso tenha id, o id é adicionado como filtro
         id ? filters._id = id : null
 
-        return Question.find(filters).limit(limit).skip(skip).sort('createAt')
+        return Question.find(filters).limit(limit).skip(skip).sort({createAt: -1})
     }
     createNewQuestion(question, userId){
         return Question.create({...question, createBy: userId})
