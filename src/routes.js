@@ -11,6 +11,7 @@ router.post('/auth/register', (req, res) => {return new AuthController().registe
 router.post('/auth/authenticate', (req, res) => {return new AuthController().authenticate(req, res)})
 
 router.get('/question/', (req, res) => {return new QuestionController().list(req, res)})
+router.get('/question/:questionId', (req, res) => {return new QuestionController().list(req, res)})
 router.post('/question/', authMiddleware, (req, res) => {return new QuestionController().create(req, res)})
 router.put('/question/:questionId', authMiddleware, (req, res) => {return new QuestionController().update(req, res)})
 router.delete('/question/:questionId', authMiddleware, (req, res) => {return new QuestionController().delete(req, res)})

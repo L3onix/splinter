@@ -1,17 +1,12 @@
 const Question = require('../models/question'),
+    QuestionRepository = require('../repositorys/questionRepository');
+const questionRepository = require('../repositorys/questionRepository');
     ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class QuestionController {
     async list(req, res) {
         try{
-            const skip = req.body.skip
-            const limit = req.body.limit
-            var query = {}
-
-            req.body.matter ? query.matter = req.body.matter : null
-            req.body.font ? query.font = req.body.font : null
-
-            const question = await Question.find(query).limit(limit).skip(skip).sort('createAt');
+            const question = await new QuestionRepository().getQuestions(req.body, req.params.questionId)
             return res.status(200).send(question);
         }catch(error){
             console.log(error);
@@ -20,8 +15,8 @@ module.exports = class QuestionController {
     }
     async create(req, res) {
         try{
-            const question = await Question.create({...req.body, createBy: req.userId})
-            res.status(200).send(question);
+            const question = await new QuestionRepository().createNewQuestion(req.body, req.userId)
+            res.status(200).send(question)
         }catch(error){
             console.log(error);
             res.status(400).send({error: 'Erro ao criar questão'});
@@ -29,8 +24,7 @@ module.exports = class QuestionController {
     }
     async update(req, res) {
         try{
-            const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
-            const question = await Question.findOneAndUpdate(query, req.body)
+            const question  = await new QuestionRepository().updateQuestionById(req.body, req.params.questionId, req.userId)
             res.status(200).send(question)
         }catch(error){
             console.log(error);
@@ -40,8 +34,7 @@ module.exports = class QuestionController {
     }
     async delete(req, res) {
         try{
-            const query = {_id: req.params.questionId, createBy: new ObjectId(req.userId)}
-            const question = await Question.findOneAndDelete(query)
+            const question = await new QuestionRepository().deleteQuestionById(req.params.questionId, req.userId)
             res.status(200).send(question)
         }catch(error){
             console.log(error);
