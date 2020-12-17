@@ -1,6 +1,7 @@
 const authMiddleware = require('../middlewares/auth'),
     Solution = require('../models/solution'),
     Question = require('../models/question'),
+    SolutionRepository = require('../repositorys/solutionRepository')
     ObjectId = require('mongoose').Types.ObjectId
 
 module.exports = class SolutionController {
@@ -33,15 +34,17 @@ module.exports = class SolutionController {
     }
     async create(req, res){
         try{
-            const question =  await Question.findById(req.body.questionId)
-            if(typeof question != undefined){
-                const solution = await Solution.create({ ...req.body, createBy: req.userId })
+            //const question =  await Question.findById(req.body.questionId)
+            //if(typeof question != undefined){
+                //const solution = await Solution.create({ ...req.body, createBy: req.userId })
 
-                await Question.findByIdAndUpdate(req.body.questionId, {$push: {solutions: new ObjectId(solution._id)}})
-                res.status(201).send(solution)
-            }else{
-                throw "ID de Question não existe!"
-            }
+                //await Question.findByIdAndUpdate(req.body.questionId, {$push: {solutions: new ObjectId(solution._id)}})
+                //res.status(201).send(solution)
+            //}else{
+                //throw "ID de Question não existe!"
+            //}
+            const solution = await new SolutionRepository().createNewSolution(req.body, req.userId, req.body.questionId)
+            res.status(200).send(solution)
         }catch(err){
             console.log(err)
             return res.status(400).send({error: err.message});

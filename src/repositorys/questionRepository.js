@@ -13,6 +13,9 @@ module.exports = class questionRepository {
 
         return Question.find(filters).limit(limit).skip(skip).sort({createAt: -1})
     }
+    getQuestionById(id){
+        return Question.findById(id)
+    }
     createNewQuestion(question, userId){
         return Question.create({...question, createBy: userId})
     }
@@ -23,5 +26,11 @@ module.exports = class questionRepository {
     deleteQuestionById(id, userId){
         const query = {_id: id, createBy: new ObjectId(userId)}
         return Question.findOneAndDelete(query)
+    }
+    verifyQuestionExists(id){
+        return Question.exists({_id: id})
+    }
+    addSolutionToQuestion(id, solutionId){
+        return Question.findByIdAndUpdate(id, {$push: {solutions: new ObjectId(solutionId)}})
     }
 }

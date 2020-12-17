@@ -1,7 +1,4 @@
-const Question = require('../models/question'),
-    QuestionRepository = require('../repositorys/questionRepository');
-const questionRepository = require('../repositorys/questionRepository');
-    ObjectId = require('mongoose').Types.ObjectId;
+const QuestionRepository = require('../repositorys/questionRepository');
 
 module.exports = class QuestionController {
     async list(req, res) {
