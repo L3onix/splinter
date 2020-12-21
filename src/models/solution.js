@@ -30,6 +30,7 @@ const SolutionSchema = new mongoose.Schema({
         ref: 'User'
     }]
 });
+
 //definindo que 'Solucao' segue o model 'SolucaoSchema'
 const Solution = mongoose.model('Solution', SolutionSchema);
 

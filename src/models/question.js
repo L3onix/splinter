@@ -24,7 +24,7 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    matter:{
+    subject:{
         type: String,
         lowercase: true,
         required: true
