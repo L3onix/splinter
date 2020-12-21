@@ -6,43 +6,20 @@ const authMiddleware = require('../middlewares/auth'),
 
 module.exports = class SolutionController {
     async list(req, res){
-        if(req.headers.authorization){  // retorna uma Solution com a avaliação do usuário
-            authMiddleware(req, res, ()=>{})
-            const userId = req.userId
-
-            Solution.findById(req.params.solutionId, (err, solution) => {
-                if(err) return res.status(400).send(err)
-
-                // formatando solution
-                let userEvaluate = ''
-                if(solution.likes.includes(userId)){
-                    userEvaluate = 'like'
-                }else if(solution.dislikes.includes(userId)){
-                    userEvaluate = 'dislike'
-                }
-                solution._doc.likes = solution.likes.length
-                solution._doc.dislikes = solution.dislikes.length
-                
-                res.status(200).send({solution, "userEvaluate": userEvaluate})
-            })
+        try{
+            if(req.headers.authorization){
+                console.log('passou')
+                authMiddleware(req, res, () => {})
+            }
+            const solution = await new SolutionRepository().getSolutionById(req.params.solutionId, req.userId)
+            res.status(200).send(solution)
+        }catch(err){
+            console.log(err)
+            res.status(400).send({err: 'Erro ao carregar solução'})
         }
-        Solution.findById(req.params.solutionId, (err, solution) => {
-            if(err) return res.status(400).send(err)
-
-            res.status(200).send({solution})
-        })
     }
     async create(req, res){
         try{
-            //const question =  await Question.findById(req.body.questionId)
-            //if(typeof question != undefined){
-                //const solution = await Solution.create({ ...req.body, createBy: req.userId })
-
-                //await Question.findByIdAndUpdate(req.body.questionId, {$push: {solutions: new ObjectId(solution._id)}})
-                //res.status(201).send(solution)
-            //}else{
-                //throw "ID de Question não existe!"
-            //}
             const solution = await new SolutionRepository().createNewSolution(req.body, req.userId, req.body.questionId)
             res.status(200).send(solution)
         }catch(err){
@@ -51,16 +28,9 @@ module.exports = class SolutionController {
         }
     }
     async update(req, res){
-        const userId = req.userId;
         try {
-            const solution = await Solution.findById(req.params.solutionId);
-            if (solution.createBy == userId) {
-                const edited = await Solution.findByIdAndUpdate(req.params.solutionId, req.body, { new: true });
-                
-                res.status(200).send({upload: true});
-            } else {
-                res.status(400).send({ error: 'Usuário não é dono desta solução' });
-            }
+            const solution = await new SolutionRepository().updateSolutionById(req.body, req.params.solutionId, req.userId)
+            res.status(200).send(solution)
         } catch (error) {
             console.log(error);
             res.status(400).send({ error: 'Erro ao tentar editar solução' });
@@ -69,13 +39,15 @@ module.exports = class SolutionController {
     }
     async delete(req, res){
         try {
-            const solution = await Solution.findById(req.params.solutionId);
-            if (solution.createBy == req.userId) {
-                await Solution.findByIdAndRemove(req.params.solutionId);
-                res.status(200).send({ delete: true });
-            } else {
-                res.status(400).send({ error: 'Usuário não é dono da solução' });
-            }
+            //const solution = await Solution.findById(req.params.solutionId);
+            //if (solution.createBy == req.userId) {
+            //    await Solution.findByIdAndRemove(req.params.solutionId);
+            //    res.status(200).send({ delete: true });
+            //} else {
+            //    res.status(400).send({ error: 'Usuário não é dono da solução' });
+            //}
+            const solution = await new SolutionRepository().deleteSolutionById(req.params.solutionId, req.userId)
+            res.status(200).send(solution)
         } catch (error) {
             console.log(error);
             return res.status(400).send({ error: 'Erro ao deletar solução' });
