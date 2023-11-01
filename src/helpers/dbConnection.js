@@ -1,12 +1,6 @@
 const mongoose = require('mongoose')
-
-const username = 'root'
-const passwd = 'default1'
-const cluster = '127.0.0.1:27017'
-const dbname = 'test'
-const mongoUrl = `mongodb://${username}:${passwd}@${cluster}/`
-
-const db = mongoose.connection
+const password = 'LkCclPMSmbutCQqf'
+const mongoUrl = `mongodb+srv://l3onix:${password}@splinter.ialak46.mongodb.net/?retryWrites=true&w=majority`
 
 const conn = async () => {
     try {
