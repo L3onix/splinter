@@ -1,5 +1,5 @@
 const request = require('supertest')
-const app = require('../app')
+const app = require('../src/app')
 
 describe("Test the AUTH paths", () => {
   test("(GET)/auth/status: when user logged and correct request", (done) => {

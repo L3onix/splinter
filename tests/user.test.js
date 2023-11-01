@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app");
+const app = require("../src/app");
 
 describe("Test the USER paths", () => {
   test("(POST)/user: when correct user data and correct request", async () => {
