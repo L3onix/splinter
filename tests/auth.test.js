@@ -40,4 +40,33 @@ describe("Test the AUTH paths", () => {
                 done();
             });
     });
+
+    test("(POST)/auth/register: when all user data is correct", (done) => {
+        request(app)
+            .post("/auth/register")
+            .send({
+                name: "Bartolomeu Gusman",
+                email: "bartolomeu@teste.com",
+                password: password,
+            })
+            .then((response) => {
+                expect(response.statusCode).toBe(201);
+                done();
+            });
+    });
+
+    test("(POST)/auth/register: if response not load password", (done) => {
+        request(app)
+            .post("/auth/register")
+            .send({
+                name: "Bartolomeu Gusman",
+                email: "bartolomeu@teste.com",
+                password: password,
+            })
+            .then((response) => {
+                expect(response.statusCode).toBe(201);
+                expect(response.body).not.toHaveProperty("password");
+                done();
+            });
+    });
 });
