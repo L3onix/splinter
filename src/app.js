@@ -5,6 +5,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const auth = require("./routes/AuthRoute");
 const user = require("./routes/UserRoute");
+const question = require("./routes/QuestionRoute");
 const dbConnection = require("./helpers/dbConnection");
 
 app.use(bodyParser.json());
@@ -20,5 +21,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/auth", auth);
 app.use("/user", user);
+app.use("/question", question);
 
 module.exports = app;
