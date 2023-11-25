@@ -4,14 +4,24 @@ const questionSchema = new Schema({
     createdBy: { type: String, require: true },
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date, default: Date.now() },
+    activated: { type: Boolean, default: true },
     questionText: String,
+    questionOrigin: String,
     questionAlternatives: [
         {
             alternativeText: String,
             isCorrect: { type: Boolean, default: false },
         },
     ],
-    questionOrigin: String,
+    comments: [
+        {
+            createdBy: { type: String, require: true },
+            createdAt: { type: Date, default: Date.now() },
+            updatedAt: { type: Date, default: Date.now() },
+        },
+    ],
+    likes: {},
+    dislikes: [String],
 });
 
 const Question = model("Question", questionSchema);
