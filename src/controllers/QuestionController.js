@@ -37,6 +37,26 @@ async function update(req, res) {
     }
 }
 
+async function deleteById(req, res) {
+    try {
+        const id = req.params.id;
+        Question.findByIdAndUpdate(id, { activated: false }).then(
+            (question) => {
+                if (!question) res.status(400).end();
+                res.status(200).end();
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        res.status(400).end();
+    }
+}
+
+// TODO: função para adicionar comentários
+// TODO: função para editar comentários
+// TODO: função para deletar comentários
+//
+
 module.exports = {
     show,
     create,
