@@ -1,8 +1,10 @@
 const request = require("supertest");
 const app = require("../src/app");
-const User = require("../src/models/User");
-const { encryptPassword } = require("../src/helpers/BcryptHelper");
-const { generateAccessToken } = require("../src/helpers/JwtHelper");
+const {
+    createNewUser,
+    deleteAllUsers,
+    getAccessTokenByUser,
+} = require("./helpers/UserTestHelper");
 
 describe("Test the AUTH paths", () => {
     let token = "";
@@ -11,14 +13,9 @@ describe("Test the AUTH paths", () => {
     const password = "asdfasdf";
 
     beforeEach(async () => {
-        await User.deleteMany({});
-        const user = await User.create({
-            name: name,
-            email: email,
-            password: String(encryptPassword(password)),
-        });
-
-        token = generateAccessToken(user);
+        await deleteAllUsers();
+        const user = await createNewUser(name, email, password);
+        token = getAccessTokenByUser(user);
     });
 
     test("(GET)/auth/status: when user logged and correct request", (done) => {
