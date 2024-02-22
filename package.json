@@ -1,32 +1,35 @@
 {
   "name": "splinter",
-  "version": "0.2.0",
-  "description": "API Rest para aplicativo educacional, desenvolvida no projeto de pesquisa da UNITINS",
-  "main": "app.js",
+  "version": "0.0.1",
+  "description": "API service to explode ENEM",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node ./src/server.js",
+    "dev": "node --watch ./src/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/l3onix/splinter.git"
+    "url": "git+https://github.com/L3onix/splinter.git"
   },
   "author": "Leonardo Facundes <leonardo.fm00@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/l3onix/splinter/issues"
+    "url": "https://github.com/L3onix/splinter/issues"
   },
-  "homepage": "https://github.com/l3onix/splinter#readme",
+  "homepage": "https://github.com/L3onix/splinter#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.9.28"
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.0",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "babel-cli": "^6.26.0",
+    "jest": "^29.7.0",
+    "superagent": "^8.1.2",
+    "supertest": "^6.3.3"
   }
 }
