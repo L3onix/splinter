@@ -4,7 +4,7 @@ const questionSchema = new Schema({
     createdBy: { type: String, require: true },
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date, default: Date.now() },
-    activated: { type: Boolean, default: true },
+    deleted: { type: Boolean, default: false },
     questionText: String,
     questionOrigin: String,
     questionAlternatives: [
