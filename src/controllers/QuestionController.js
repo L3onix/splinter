@@ -2,7 +2,7 @@ const Question = require("../models/Question");
 
 async function show(req, res) {
     try {
-        Question.findById(req.params.id).then((question) => {
+        await Question.findById(req.params.id).then((question) => {
             if (!question) res.status(400).end();
             res.status(200).json({ success: true, data: question }).end();
         });
@@ -14,7 +14,7 @@ async function show(req, res) {
 
 async function create(req, res) {
     try {
-        Question.create(req.body).then((question) => {
+        await Question.create(req.body).then((question) => {
             if (!question) res.status(400).end();
             res.status(201).json({ success: true, data: question }).end();
         });
@@ -27,7 +27,7 @@ async function create(req, res) {
 async function update(req, res) {
     try {
         req.body.updatedAt = Date.now();
-        Question.findByIdAndUpdate(req.params.id, req.body).then((question) => {
+        await Question.findByIdAndUpdate(req.params.id, req.body).then((question) => {
             if (!question) res.status(400).end();
             res.status(200).json({ success: true, data: question }).end();
         });
@@ -40,7 +40,7 @@ async function update(req, res) {
 async function deleteById(req, res) {
     try {
         const id = req.params.id;
-        Question.findByIdAndUpdate(id, { activated: false }).then(
+        await Question.findByIdAndUpdate(id, { activated: false }).then(
             (question) => {
                 if (!question) res.status(400).end();
                 res.status(200).end();
